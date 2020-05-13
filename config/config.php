@@ -2,7 +2,7 @@
 
 $servername  = '1';
 $dbname      = '1';
-$dbusername  = '1';
+$dbusername  = '2';
 $dbpassword  = '2';
 $dbmysql  = 'mysqli';
 
