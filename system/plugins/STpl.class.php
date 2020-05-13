@@ -55,14 +55,34 @@ class STpl{
 		}else{
 			//替换 if,elseif,/if; foreach,/foreach; for,/for
 			$pattern = "/^(if|foreach|for)(([\s|\(]+)(.+))/msi";
-			$content = preg_replace_callback($pattern,create_function('$m','$t = trim($m[3]);$v = trim($m[2]);if(empty($t)){return "{$m[1]}($v){";}else{return "{$m[1]}$v{";}'),$content);
-			$patterns = array("/^(elseif)([\s*|\\(].*)/msi","/^(else)/msUi","/^\/(if|foreach|for)/msi");
+			//$content = preg_replace_callback($pattern,create_function('$m','$t = trim($m[3]);$v = trim($m[2]);if(empty($t)){return "{$m[1]}($v){";}else{return "{$m[1]}$v{";}'),$content);
+            $content = preg_replace_callback($pattern,function($m){
+                $t = trim($m[3]);
+                $v = trim($m[2]);
+                if(empty($t)){
+                    return "{$m[1]}($v){";
+                }else{
+                    return "{$m[1]}$v{";
+                }
+            },$content);
+
+            $patterns = array("/^(elseif)([\s*|\\(].*)/msi","/^(else)/msUi","/^\/(if|foreach|for)/msi");
 			$replacements=array('}\\1(\\2){','}\\1{','}');
 			$content = preg_replace($patterns,$replacements,$content);
 
 			//替换变量或输出变量(包括对象成员变量或函数)
-			$content = preg_replace_callback('/\$(\w+)([\s]*\.[\s]*(\w+))*/ms', create_function('$m', '$arr=explode(".",$m[0]);array_shift($arr);$r="\$this->_tpl_vars[\'".$m[1]."\']";foreach($arr AS $a){$r.="[\'".trim($a)."\']";}return $r;'), $content);
-			$content = preg_replace('/^(\$this->_tpl_vars((\[["|\']\w+["|\']\])+)(->.+)*)$/ms', "echo \\1", $content);
+			//$content = preg_replace_callback('/\$(\w+)([\s]*\.[\s]*(\w+))*/ms', create_function('$m', '$arr=explode(".",$m[0]);array_shift($arr);$r="\$this->_tpl_vars[\'".$m[1]."\']";foreach($arr AS $a){$r.="[\'".trim($a)."\']";}return $r;'), $content);
+            $content = preg_replace_callback('/\$(\w+)([\s]*\.[\s]*(\w+))*/ms', function($m) {
+                $arr=explode(".",$m[0]);
+                array_shift($arr);
+                $r="\$this->_tpl_vars['".$m[1]."']";
+                foreach($arr AS $a){
+                    $r.="['".trim($a)."']";
+                }
+                return $r;
+            }, $content);
+
+            $content = preg_replace('/^(\$this->_tpl_vars((\[["|\']\w+["|\']\])+)(->.+)*)$/ms', "echo \\1", $content);
 		}
 
 		$content="<?php $content; ?>";

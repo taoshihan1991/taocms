@@ -3,6 +3,7 @@
 define('ROOT', dirname(dirname(__FILE__)).'/');  //系统程序根路径, 必须定义, 用于防翻墙、文件调用等
 
 define('ADMINDIR', substr(str_replace(dirname(dirname(__FILE__)), '', dirname(__FILE__)), 1)); //自动定义后台管理的目录名称
+define('RW_BACKEND', SYSDIR . ADMINDIR . '/' . (SITEREWRITE? '' : 'index.php/')); //后台切换伪静态时相对系统根目录的URL, 用于BURL()函数, 提高运行速度
 
 require(ROOT . 'includes/core.php');  //加载核心文件
 
