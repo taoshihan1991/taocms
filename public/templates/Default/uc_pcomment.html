@@ -1,0 +1,75 @@
+{include header.html}
+
+<div class="w uc">
+	<!-- 包含用户菜单 -->
+	{include uc_menu.html}
+
+	<div class="r fr">
+		<div class="t">{$submenu}</div>
+		<div class="con">
+			<form id="commform" method="post" action="{PURL('uc_pcomment/delete')}">
+			<input type="hidden" name="p" value="{$page}">
+			<table class="tb2">
+			<tr>
+				<th>{$langs.comments} ({$langs.view})</th>
+				<th>{$langs.status}</th>
+				<th>{$langs.time}</th>
+				<th>{$langs.product}</th>
+				<th><input type="checkbox" id="checkAll" chkfor="deleteids[]" class="chbox"{if !$del_c} disabled{/if}> <label for="checkAll">{$langs.delete}</label></th>
+			</tr>
+			{$line2 = 0}
+			{foreach $comments AS $comm}
+				{if $line2}
+					{$lineclass = ' class=tr2'; $line2 = 0}
+				{else}
+					{$lineclass = ''; $line2 = 1}
+				{/if}
+				<tr{$lineclass}>
+					<td class=al><div class="short3">{$comm.content}</div></td>
+					<td class=al>{if $comm.actived != 1}<font class=red>{$langs.u_waiting}</font>{else}{$langs.u_online}{/if}</td>
+					<td>{echo DisplayDate($comm.created, '', 1)}</td>
+					<td><a href="{PURL('products?id=' . $comm.for_id)}" target="_blank" title="{$langs.product} (ID: {$comm.for_id})"><img src="{$t_url}images/product.gif"></a></td>
+					<td><input type="checkbox" name="deleteids[]" value="{$comm.c_id}" class="chbox"{if !$del_c} disabled{/if}></td>
+				</tr>
+			{/foreach}
+			</table>
+			{$pagelist}
+			{if $comments}
+			<div class="submit ac"><input type="submit" value="{$langs.u_delcomms}" class="{if $del_c}save{else}cancel{/if}" id="u_deletes"{if !$del_c} disabled{/if}></div>
+			{/if}
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+$(function(){
+	//全选checkbox
+	$("#checkAll").click(function(e){
+		$("input[name='" + $(this).attr("chkfor") + "']").attr("checked", this.checked);
+	});
+
+	$("input#u_deletes").click(function(e){
+		showDialog("{$langs.u_delecinfo}", '', function(){
+			$("form#commform").submit();		
+		});
+		e.preventDefault();
+	});
+
+	$("body").append('<div id="short3div"></div>');
+	$(".tb2 div.short3").hover(function(){
+		$("#short3div").html($(this).html().replace(/\r\n|\r|\n/g, "<br>"));
+		easyDialog.open({
+			container : 'short3div',
+			follow : this,
+			followX : -9,
+			followY : 28
+		});
+	},function(){
+		easyDialog.close();
+	});
+
+});
+</script>
+
+{include footer.html}

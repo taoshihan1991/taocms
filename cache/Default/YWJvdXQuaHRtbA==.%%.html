@@ -1,0 +1,55 @@
+<?php $this->display('header.html'); ?>
+
+<!-- 关于我们等企业内容页 start -->
+<div id="info" class="w">
+	<div class="i_left">
+		<!-- 常态内容导航 start -->
+		<div class="i_menu">
+			<div class="list">
+				<a href="<?php PURL('about'); ?>" <?php if($this->_tpl_vars['id']==1){; ?>class="on"<?php }; ?>><?php echo $this->_tpl_vars['langs']['aboutus']; ?></a>
+				<a href="<?php PURL('about?id=2'); ?>" <?php if($this->_tpl_vars['id']==2){; ?>class="on"<?php }; ?>><?php echo $this->_tpl_vars['langs']['contactus']; ?></a>
+				<a href="<?php PURL('about?id=14'); ?>" <?php if($this->_tpl_vars['id']==14){; ?>class="on"<?php }; ?>><?php echo $this->_tpl_vars['langs']['culture']; ?></a>
+				<a href="<?php PURL('about?id=15'); ?>" <?php if($this->_tpl_vars['id']==15){; ?>class="on"<?php }; ?>><?php echo $this->_tpl_vars['langs']['organization']; ?></a>
+				<a href="<?php PURL('about?id=11'); ?>" <?php if($this->_tpl_vars['id']==11){; ?>class="on"<?php }; ?>><?php echo $this->_tpl_vars['langs']['company1']; ?></a>
+				<a href="<?php PURL('about?id=12'); ?>" <?php if($this->_tpl_vars['id']==12){; ?>class="on"<?php }; ?>><?php echo $this->_tpl_vars['langs']['company2']; ?></a>
+				<a href="<?php PURL('about?id=13'); ?>" <?php if($this->_tpl_vars['id']==13){; ?>class="on"<?php }; ?>><?php echo $this->_tpl_vars['langs']['company3']; ?></a>
+			</div>
+		</div>
+		<!-- 常态内容导航 end -->
+
+		<!-- 产品展示 start -->
+		<div class="i_pros">
+			<div class="divtop"><span class="span_r"><a href="<?php PURL('products'); ?>"><?php echo $this->_tpl_vars['langs']['more']; ?></a></span><span class=icon></span><a href="<?php PURL('products'); ?>"><?php echo $this->_tpl_vars['langs']['randproduct']; ?></a></div>
+			<div class="pros">
+			<?php foreach($this->_tpl_vars['products'] AS $this->_tpl_vars['product']){; ?>
+			<div class="pro">
+				<div class="i_thumb_1"><table><tr><td><a href="<?php PURL('products?id=' . $this->_tpl_vars['product']['pro_id']); ?>" title="<?php echo $this->_tpl_vars['product']['title']; ?>"><img original="<?php PrintImageURL($this->_tpl_vars['product']['path'], $this->_tpl_vars['product']['filename']); ?>"></a></td></tr></table></div>
+			</div>
+			<?php }; ?>
+			</div>
+		</div>
+		<!-- 产品展示 end -->
+	</div>
+
+	<!-- 常态内容 start -->
+	<div class="i_right">
+		<div class="title">
+			<?php echo $this->_tpl_vars['content']['title']; ?>
+			<div class="fontZoom">
+				<a href="" class="icons font_down" title="<?php echo $this->_tpl_vars['langs']['zoomout']; ?>"></a>
+				<a href="" class="icons font_up" title="<?php echo $this->_tpl_vars['langs']['zoomin']; ?>"></a>
+			</div>
+		</div>
+		<div class="content"><?php echo $this->_tpl_vars['content']['content']; ?></div>
+	</div>
+	<!-- 常态内容 end -->
+</div>
+<!-- 关于我们等企业内容页 end -->
+
+<script type="text/javascript">
+$(function() {
+	$(".fontZoom").fontZoom({ obj:".content", max:36, min:10});
+});
+</script>
+
+<?php $this->display('footer.html'); ?>

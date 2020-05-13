@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head> 
+<title>IIS 8.5 详细错误 - 401.2 - Unauthorized</title> 
+<style type="text/css"> 
+<!-- 
+body{margin:0;font-size:.7em;font-family:Verdana,Arial,Helvetica,sans-serif;} 
+code{margin:0;color:#006600;font-size:1.1em;font-weight:bold;} 
+.config_source code{font-size:.8em;color:#000000;} 
+pre{margin:0;font-size:1.4em;word-wrap:break-word;} 
+ul,ol{margin:10px 0 10px 5px;} 
+ul.first,ol.first{margin-top:5px;} 
+fieldset{padding:0 15px 10px 15px;word-break:break-all;} 
+.summary-container fieldset{padding-bottom:5px;margin-top:4px;} 
+legend.no-expand-all{padding:2px 15px 4px 10px;margin:0 0 0 -12px;} 
+legend{color:#333333;;margin:4px 0 8px -12px;_margin-top:0px; 
+font-weight:bold;font-size:1em;} 
+a:link,a:visited{color:#007EFF;font-weight:bold;} 
+a:hover{text-decoration:none;} 
+h1{font-size:2.4em;margin:0;color:#FFF;} 
+h2{font-size:1.7em;margin:0;color:#CC0000;} 
+h3{font-size:1.4em;margin:10px 0 0 0;color:#CC0000;} 
+h4{font-size:1.2em;margin:10px 0 5px 0; 
+}#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS",Verdana,sans-serif; 
+ color:#FFF;background-color:#5C87B2; 
+}#content{margin:0 0 0 2%;position:relative;} 
+.summary-container,.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;} 
+.content-container p{margin:0 0 10px 0; 
+}#details-left{width:35%;float:left;margin-right:2%; 
+}#details-right{width:63%;float:left;overflow:hidden; 
+}#server_version{width:96%;_height:1px;min-height:1px;margin:0 0 5px 0;padding:11px 2% 8px 2%;color:#FFFFFF; 
+ background-color:#5A7FA5;border-bottom:1px solid #C1CFDD;border-top:1px solid #4A6C8E;font-weight:normal; 
+ font-size:1em;color:#FFF;text-align:right; 
+}#server_version p{margin:5px 0;} 
+table{margin:4px 0 4px 0;width:100%;border:none;} 
+td,th{vertical-align:top;padding:3px 0;text-align:left;font-weight:normal;border:none;} 
+th{width:30%;text-align:right;padding-right:2%;font-weight:bold;} 
+thead th{background-color:#ebebeb;width:25%; 
+}#details-right th{width:20%;} 
+table tr.alt td,table tr.alt th{} 
+.highlight-code{color:#CC0000;font-weight:bold;font-style:italic;} 
+.clear{clear:both;} 
+.preferred{padding:0 5px 2px 5px;font-weight:normal;background:#006633;color:#FFF;font-size:.8em;} 
+--> 
+</style> 
+ 
+</head> 
+<body> 
+<div id="content"> 
+<div class="content-container"> 
+  <h3>HTTP 错误 401.2 - Unauthorized</h3> 
+  <h4>由于身份验证头无效，您无权查看此页。</h4> 
+</div> 
+<div class="content-container"> 
+ <fieldset><h4>最可能的原因:</h4> 
+  <ul> 	<li>未在 IIS 中选择任何身份验证协议(包括匿名)。</li> 	<li>只启用了集成身份验证，而使用的客户端浏览器不支持集成身份验证。</li> 	<li>启用了集成身份验证，并且请求通过代理发出，但代理在请求到达 Web 服务器之前更改了身份验证头。</li> 	<li>Web 服务器未配置为匿名访问，并且没有收到所需的授权标头。</li> 	<li>"configuration/system.webServer/authorization" 配置节可能明确拒绝了用户访问。</li> </ul> 
+ </fieldset> 
+</div> 
+<div class="content-container"> 
+ <fieldset><h4>可尝试的操作:</h4> 
+  <ul> 	<li>确认资源的身份验证设置，然后尝试使用该身份验证方法请求此资源。</li> 	<li>确认客户端浏览器支持集成身份验证。</li> 	<li>确认在使用集成身份验证时，请求不是通过代理发送的。</li> 	<li>确认未在“configuration/system.webServer/authorization”配置节中明确拒绝该用户的访问。</li> 	<li>创建跟踪规则以跟踪此 HTTP 状态代码的失败请求。有关为失败的请求创建跟踪规则的详细信息，请单击<a href="http://go.microsoft.com/fwlink/?LinkID=66439">此处</a>。 </li> </ul> 
+ </fieldset> 
+</div> 
+ 
+<div class="content-container"> 
+ <fieldset><h4>详细错误信息:</h4> 
+  <div id="details-left"> 
+   <table border="0" cellpadding="0" cellspacing="0"> 
+    <tr class="alt"><th>模块</th><td>&nbsp;&nbsp;&nbsp;IIS Web Core</td></tr> 
+    <tr><th>通知</th><td>&nbsp;&nbsp;&nbsp;AuthenticateRequest</td></tr> 
+    <tr class="alt"><th>处理程序</th><td>&nbsp;&nbsp;&nbsp;StaticFile</td></tr> 
+    <tr><th>错误代码</th><td>&nbsp;&nbsp;&nbsp;0x80070005</td></tr> 
+     
+   </table> 
+  </div> 
+  <div id="details-right"> 
+   <table border="0" cellpadding="0" cellspacing="0"> 
+    <tr class="alt"><th>请求的 URL</th><td>&nbsp;&nbsp;&nbsp;http://www.ht-bearing.com.cn:80/images/cb-b-shuanlie.jpg</td></tr> 
+    <tr><th>物理路径</th><td>&nbsp;&nbsp;&nbsp;D:\www\web\ht-bearing.com.cn1\images\cb-b-shuanlie.jpg</td></tr> 
+    <tr class="alt"><th>登录方法</th><td>&nbsp;&nbsp;&nbsp;尚未确定</td></tr> 
+    <tr><th>登录用户</th><td>&nbsp;&nbsp;&nbsp;尚未确定</td></tr> 
+     
+   </table> 
+   <div class="clear"></div> 
+  </div> 
+ </fieldset> 
+</div> 
+ 
+<div class="content-container"> 
+ <fieldset><h4>详细信息:</h4> 
+  当服务器配置不支持发送到 Web 服务器的 WWW-Authenticate 头时，就会出现此错误。请检查资源的身份验证方法，并确认客户端使用的是哪种身份验证方法。当身份验证方法不同时就会出现错误。要确定客户端使用的身份验证类型，请检查客户端的身份验证设置。 
+  <p><a href="http://go.microsoft.com/fwlink/?LinkID=62293&amp;IIS70Error=401,2,0x80070005,9600">查看详细信息 &raquo;</a></p> 
+  <p>Microsoft 知识库文章:</p> 
+ <ul><li>907273</li><li>253667</li></ul> 
+ 
+ </fieldset> 
+</div> 
+</div> 
+</body> 
+</html> 

@@ -1,0 +1,78 @@
+{include header.html}
+
+<div id="news" class="w">
+	<!-- 搜索结果 start -->
+	<div class="xleft">
+		<div class="t bn"><font class=greyb>{$results_info}</font></div>
+		<div class="uc">
+			<table class="tb2">
+			<tr>
+				<th>{$langs.type}</th>
+				<th>{$langs.title}</th>
+				<th>{$langs.category}</th>
+				<th>{$langs.price}</th>
+				<th>{$langs.clicks}</th>
+				<th>{$langs.date}</th>
+			</tr>
+			{$line2 = 0}
+			{foreach $results AS $result}
+				{if $line2}
+					{$lineclass = ' class=tr2'; $line2 = 0}
+				{else}
+					{$lineclass = ''; $line2 = 1}
+				{/if}
+				<tr{$lineclass}>
+					{if $result.type}
+						<td><a href="{PURL('products')}?id={$result.id}"><img class="ZoomImg" width="40" original="{PrintImageURL($result.path, $result.filename)}"></a></td>
+						<td class=al><div class=short2><a href="{PURL('products')}?id={$result.id}" title="{$result.title}">{$result.title}</a></div></td>
+					{else}
+						<td>{$langs.article}</td>
+						<td class=al><div class=short2><a href="{if $result.linkurl}{$result.linkurl}" target="_blank"{else}{PURL('articles')}?id={$result.id}"{/if} title="{$result.title}">{$result.title}</a></div></td>
+					{/if}
+					<td>
+					<?php
+					if($this->_tpl_vars['result']['type']){					
+						echo '<a href="' . URL('products?cat=') . $this->_tpl_vars['result']['cat_id'] . '">' . $this->pcategories[$this->_tpl_vars['result']['cat_id']]['name'] . '</a>';
+					}else{
+						echo '<a href="' . URL('articles?cat=') . $this->_tpl_vars['result']['cat_id'] . '">' . $this->acategories[$this->_tpl_vars['result']['cat_id']]['name'] . '</a>';
+					}
+					?>
+					</td>
+					<td>{if $result.price}{$result.price}{else}&nbsp;{/if}</td>
+					<td>{$result.clicks}</td>
+					<td>{echo DisplayDate($result.created)}</td>
+				</tr>
+			{/foreach}
+			</table>
+		</div>
+
+		<!-- 分页 start -->
+		{$pagelist}
+		<!-- 分页 end -->
+	</div>
+	<!-- 搜索结果 end -->
+
+	<!-- 产品展示 start -->
+	<div class="xright">
+		<div class="divtop"><span class="span_r"><a href="{PURL('products')}">{$langs.more}</a></span><span class=icon></span><a href="{PURL('products')}">{$langs.randproduct}</a></div>
+		<div class="pros">
+		{foreach $products AS $product}
+		<div class="pro">
+			<div class="i_thumb_1"><table><tr><td><a href="{PURL('products?id=' . $product.pro_id)}" title="{$product.title}"><img original="{PrintImageURL($product.path, $product.filename)}"></a></td></tr></table></div>
+		</div>
+		{/foreach}
+		</div>
+	</div>
+	<!-- 产品展示 end -->
+</div>
+
+<script type="text/javascript">
+$(function() {
+	//小图显示中号缩略图特效
+	$("img.ZoomImg").mousemove(function(e) {
+		ShowBigImage(e, $(this));
+	});
+});
+</script>
+
+{include footer.html}

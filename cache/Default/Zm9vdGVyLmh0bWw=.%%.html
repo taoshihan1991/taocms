@@ -1,0 +1,82 @@
+<!-- 显示信息系统对话框 start -->
+<?php echo $this->_tpl_vars['system_info']; ?>
+<!-- 显示信息系统对话框 end -->
+<div class="w footer">
+	<div id="foot">
+	    <div>
+		<p id="footeradv"><?php echo $this->_tpl_vars['langs']['footer_ad']; ?></p>
+		<p id="message">
+			<a href="<?php PURL(); ?>"><?php echo $this->_tpl_vars['langs']['home']; ?></a><em>|</em>
+			<a href="<?php PURL('news'); ?>"><?php echo $this->_tpl_vars['langs']['news']; ?></a><em>|</em>
+			<a href="<?php PURL('products'); ?>"><?php echo $this->_tpl_vars['langs']['products']; ?></a><em>|</em>
+			<a href="<?php PURL('about'); ?>"><?php echo $this->_tpl_vars['langs']['aboutus']; ?></a><em>|</em>
+			<a href="<?php PURL('about?id=2'); ?>"><?php echo $this->_tpl_vars['langs']['contactus']; ?></a>
+			<?php if($this->_tpl_vars['sitebeian']){; ?>
+				<em>|</em>
+				<a href="http://www.miibeian.gov.cn/" target="_blank"><?php echo $this->_tpl_vars['sitebeian']; ?></a>
+			<?php }; ?>
+		</p>
+		<p id="copy">&copy; <?php echo date("Y"); ?> <a href="<?php PURL(); ?>"><?php echo $this->_tpl_vars['sitename']; ?></a> <?php Debug(); ?></p>
+	    </div>
+	</div>
+</div>
+
+
+<!-- 用户登录框(供JS调用, 未登录时有效) start -->
+<?php if(!$this->_tpl_vars['sys_user']['userid']){; ?>
+<div id="login_container" class="hide">
+	<div id="u_login">
+		<div id="login_info"></div>
+		<div class="userform">
+			<form id="u_login_form" onsubmit="return false;">
+				<input type="hidden" name="key" value="<?php echo $this->_tpl_vars['sys_key']; ?>">
+				<input type="hidden" name="code" value="<?php echo $this->_tpl_vars['sys_code']; ?>">
+				<div class="item top">
+					<b class="i-u"></b><input name="username" placeholder="<?php echo $this->_tpl_vars['langs']['username']; ?>" type="text" autocomplete="off">
+					<b class="i"></b>
+				</div>
+				<div class="item">
+					<b class="i-p"></b><input name="password" placeholder="<?php echo $this->_tpl_vars['langs']['password']; ?>" type="password">
+					<b class="i"></b>
+				</div>
+				<div class="item rem">
+					<input type="checkbox" name="remember" value="1" id="remember"><label for="remember"><?php echo $this->_tpl_vars['langs']['rememberme']; ?></label>
+					<a href="#" id="forget_pass"><?php echo $this->_tpl_vars['langs']['forgetpass']; ?></a>
+				</div>
+			</form>
+
+			<form id="u_forgot_form" class="hide" onsubmit="return false;">
+				<input type="hidden" name="key" value="<?php echo $this->_tpl_vars['sys_key']; ?>">
+				<input type="hidden" name="code" value="<?php echo $this->_tpl_vars['sys_code']; ?>">
+				<div class="item">
+					<b class="i-u"></b><input name="email" placeholder="<?php echo $this->_tpl_vars['langs']['email']; ?>" type="text" autocomplete="off">
+					<b class="i"></b>
+				</div>
+				<div class="item rem">
+					<a href="#" id="back_login"><?php echo $this->_tpl_vars['langs']['backlogin']; ?></a>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script>
+//输出一个登录函数供JS调用
+function login(){
+	openLogin("<?php PURL('ajax/login'); ?>", "<?php PURL('ajax/getpass'); ?>", "<?php echo COOKIE_SAFE; ?>", "<?php echo $this->_tpl_vars['sys_cookievalue']; ?>");
+}
+</script>
+<?php }; ?>
+<!-- 用户登录框 end -->
+
+<script>
+$(function() {
+	//登录用户发短信
+	$(".pm").click(function(e) {
+		openPM("<?php PURL('uc_ajax/savepm'); ?>",parseInt($(this).attr("toid")), $(this).attr("toname"), "<?php echo $this->_tpl_vars['sys_key']; ?>", "<?php echo COOKIE_SAFE; ?>", "<?php echo $this->_tpl_vars['sys_cookievalue']; ?>");
+		e.preventDefault();
+	});
+});
+</script>
+
+</body>
+</html>

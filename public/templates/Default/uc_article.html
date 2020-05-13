@@ -1,0 +1,86 @@
+{include header.html}
+
+<div class="w uc">
+	<!-- 包含用户菜单 -->
+	{include uc_menu.html}
+
+	<div class="r fr">
+		<div class="t">{$submenu}</div>
+		<div class="con">
+			<form id="artform" method="post" action="{PURL('uc_article/delete')}">
+			<input type="hidden" name="p" value="{$page}">
+			<table class="tb2">
+			<tr>
+				<th>{$langs.title}</th>
+				<th>{$langs.status}</th>
+				<th>{$langs.category}</th>
+				<th>{$langs.clicks}</th>
+				<th>{$langs.date}</th>
+				<th>{$langs.view}</th>
+				<th><input type="checkbox" id="checkAll" chkfor="deleteids[]" class="chbox"{if !$del_a} disabled{/if}> <label for="checkAll">{$langs.delete}</label></th>
+			</tr>
+			{$line2 = 0}
+			{foreach $articles AS $art}
+				{if $line2}
+					{$lineclass = ' class=tr2'; $line2 = 0}
+				{else}
+					{$lineclass = ''; $line2 = 1}
+				{/if}
+				<tr{$lineclass}>
+					<td class=al><div class=short2><a href="{PURL('uc_article/edit')}?a_id={$art.a_id}" title="{$art.title}">{if $art.is_show == 0}<font class=red><s>{$art.title}</s></font>{else}{$art.title}{/if}</a></div></td>
+					<td>{if $art.is_show == 1}{$langs.u_online}{elseif $art.is_show == 0}<font class=red><s>{$langs.forbidden}</s></font>{else}<font class=red>{$langs.u_waiting}</font>{/if}</td>
+					<td><?php echo $this->acategories[$this->_tpl_vars['art']['cat_id']]['name']; ?></td>
+					<td>{$art.clicks}</td>
+					<td>{echo DisplayDate($art.created)}</td>
+					<td>{if $art.is_show ==1}<a href="{PURL('articles')}?id={$art.a_id}"" target="_blank" title="ID: {$art.a_id}"><img src="{$t_url}images/article.gif"></a>{else}&nbsp;{/if}</td>
+					<td><input type="checkbox" name="deleteids[]" value="{$art.a_id}" class="chbox"{if !$del_a} disabled{/if}></td>
+				</tr>
+			{/foreach}
+			</table>
+			{$pagelist}
+			{if $articles}
+			<div class="submit ac"><input type="submit" value="{$langs.u_delarts}" class="{if $del_a}save{else}cancel{/if}" id="u_deletes"{if !$del_a} disabled{/if}></div>
+			{/if}
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+$(function(){
+	//全选checkbox
+	$("#checkAll").click(function(e){
+		$("input[name='" + $(this).attr("chkfor") + "']").attr("checked", this.checked);
+	});
+
+	$("input#u_deletes").click(function(e){
+		showDialog("{$langs.u_deleainfo}", '', function(){
+			$("form#artform").submit();		
+		});
+		e.preventDefault();
+	});
+
+	//验证添加权限
+	$(".uc a.link-btn").each(function(){
+		if($(this).attr("href").indexOf("/add") >= 0){
+			var morearts = "{$morearts}";
+			var err = false;
+			if(!{$add_a}){
+				err = langs.er_noart_right;
+			}else if(morearts && parseInt(morearts) <= 0){
+				err = langs.er_anum;
+			}
+
+			if(err){
+				$(this).click(function(e){
+					showInfo(err, '', '', 2);
+					e.preventDefault();
+				});
+			}
+			return false;
+		}
+	});
+});
+</script>
+
+{include footer.html}

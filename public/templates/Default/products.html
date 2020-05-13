@@ -1,0 +1,32 @@
+{include header.html}
+
+<!-- 产品列表页 start -->
+<div class="w prolist_main">
+	<!-- 产品列表 start -->
+	<div class="list">
+		{foreach $products AS $product}
+		<div class="pro">
+			<div class="i_thumb_2"><table><tr><td><a href="{PURL('products?id=' . $product.pro_id)}" title="{$product.title}"><img original="{PrintImageURL($product.path, $product.filename, 2)}"></a></td></tr></table></div>
+			<div class="t"><a href="{PURL('products?id=' . $product.pro_id)}" title="{$product.title}">{$product.title}</a></div>
+		</div>
+		{/foreach}
+	</div>
+	<!-- 产品列表 end -->
+
+	<!-- 分页 start -->
+	{$pagelist}
+	<!-- 分页 end -->
+</div>
+<!-- 产品列表页 end -->
+
+<script>
+$(function() {
+	$(".i_thumb_2").hover(function(){
+		$(this).parent().addClass("hover2");
+	},function(){
+		$(this).parent().removeClass("hover2");
+	});
+});
+</script>
+
+{include footer.html}

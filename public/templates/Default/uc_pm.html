@@ -1,0 +1,46 @@
+{include header.html}
+
+<div class="w uc">
+	<!-- 包含用户菜单 -->
+	{include uc_menu.html}
+
+	<div class="r fr">
+		<div class="t">{$submenu}</div>
+		<div class="con">
+			<div class="tbtitle grey">{$tbtitle}</div>
+			<form id="pmsform" method="post" action="{PURL('uc_pm/delete')}">
+			<input type="hidden" name="p" value="{$page}">
+			<table class="tb2">
+			<tr>
+				<th>{$langs.subject} ({$langs.u_reply})</th>
+				<th>{$langs.status}</th>
+				<th>{$langs.from}</th>
+				<th>{$langs.u_sendtime}</th>
+				<th><input type="checkbox" id="checkAll" chkfor="deletepmids[]" class="chbox"> <label for="checkAll">{$langs.delete}</label></th>
+			</tr>
+			{$data}
+			</table>
+			{$pagelist}
+			<div class="submit ac"><input type="submit" value="{$langs.u_delpm}" class="save" id="u_deletepms"></div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+$(function(){
+	//全选checkbox
+	$("#checkAll").click(function(e){
+		$("input[name='" + $(this).attr("chkfor") + "']").attr("checked", this.checked);
+	});
+
+	$("input#u_deletepms").click(function(e){
+		showDialog("{$langs.u_delpminfo}", '', function(){
+			$("form#pmsform").submit();		
+		});
+		e.preventDefault();
+	});
+});
+</script>
+
+{include footer.html}

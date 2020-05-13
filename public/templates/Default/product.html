@@ -1,0 +1,149 @@
+{include header.html}
+
+<!-- 这两个鼠标样式需要全URL, 否则不兼容 start -->
+<style type="text/css">
+#pro .to_left{
+	cursor:url({$t_url}images/to_left.cur), auto;
+}
+#pro .to_right{
+	cursor:url({$t_url}images/to_right.cur), auto;
+}
+</style>
+
+<a name="g"></a><!-- 锚点 -->
+<div id="pro" class="w pro_main">
+	<div class="bigimage">
+	<img src="{PrintImageURL($product.path, $product.filename, 3)}" id="big_image">
+	</div>
+
+	<!-- 组图片 start -->
+	{if $gimages}
+	<div class="gimage">
+		<div class="lev_rollLeft"></div>
+		<div class="lev_brandList">
+			<div class="lev_brandListC" id="group_images">{$gimages}</div>
+		</div>
+		<div class="lev_rollRight"></div>
+	</div>
+	<script type="text/javascript">
+	$(function() {
+		$("#group_images").GimageMove({
+			prevId: ".lev_rollLeft",
+			nextId: ".lev_rollRight",
+			offbtnleft: "off_lev_rollLeft",
+			offbtnright: "off_lev_rollRight",
+			bigId: "#big_image",  //大图片JQ选择器
+			left: "to_left", //大图片向左点击有效时的样式
+			right: "to_right",
+			disable: "disable" //大图无法点击时的样式
+		});
+	});
+	</script>
+	{/if}
+	<!-- 组图片 end -->
+
+	<div class="disc">
+		<div class="xleft">
+			<div class="t"><b class=grey>{$langs.protitle}:</b><div>{$product.title}</div><a href="" class="link-btn link-bg2 do-enquiry" pro_id="{$product.pro_id}">{$langs.wantenquiry}</a></div>
+			<table class="tb">
+			<tr>
+			<td class="td1">
+				<a href="" class="pm" toname="{$product.username}" toid="{$product.userid}"><img src="{PrintAvatar($product.userid)}" class="user_avatar" title="{$product.username}"></a>
+			</td>
+			<td class="td2">
+				<div class="s">
+					{$langs.editor}: <a href="" class="pm" toname="{$product.username}" toid="{$product.userid}" title="{$langs.u_sendpm}">{$product.username}&nbsp; <img src="{$t_url}images/pm.png"></a><u></u>
+					{$langs.date}: {echo DisplayDate($product.created)}<u></u>
+					{$langs.clicks}: {$product.clicks}<u></u>
+					<a href="#c">{$langs.comms}: {$comms}</a>
+					{if $product.price}<u></u>{$langs.price}: {$product.price}{/if}
+					<div class="fontZoom">
+						<a href="" class="icons font_down" title="{$langs.zoomout}"></a>
+						<a href="" class="icons font_up" title="{$langs.zoomin}"></a>
+					</div>
+				</div>
+				<div class="content1">{echo html($product.content)}</div>
+			</td>
+			</tr>
+			</table>
+
+			<a name="c"></a>
+			<div class="t ctop"><b class=grey>{$langs.protitle}:</b><div>{$product.title}</div><a href="" class="link-btn link-bg3 submitcomm" for_id="{$product.pro_id}" type="1">{$langs.submitc} <font class=grey>({$comms})</font></a></div>
+
+			<table class="tb c" id="commentstb">
+			{$num = 1}
+			{foreach $comments AS $comm}
+				{if $comm.userid}
+					{$link1 = '<a href="" class="pm" toname="' . $comm.username . '" toid="' . $comm.userid . '" title="' . $langs.u_sendpm . '">'}
+					{$link2 = '</a>'}
+					{$username = $comm.username . '&nbsp; <img src="' . $t_url . 'images/pm2.png">'}
+				{else}
+					{$link1 = ''}
+					{$link2 = ''}
+					{$username = '[ ' . $langs.guest . ' ] ' . $comm.username}
+				{/if}
+				<tr class="{if is_int($num/2)}c2{/if}">
+				<td class="td1">{$link1}<img src="{PrintAvatar($comm.userid)}" class="user_avatar" title="{$comm.username}">{$link2}</td>
+				<td class="td2">
+					<div class="s">
+						{$link1}{$username}{$link2}
+						<span>{echo DisplayDate($comm.created, '', 1)}&nbsp;&nbsp; #{echo $start + $num}</span>
+					</div>
+					<div class="comm">{echo nl2br($comm.content)}</div>
+				</td>
+				</tr>
+				{$num += 1}
+			{/foreach}
+			</table>
+			{$pagelist}
+		</div>
+
+		<div class="xcontainer">
+			<!-- 最新文章 start -->
+			<div class="xright">
+				<div class="divtop"><span class="span_r"><a href="{PURL('articles')}">{$langs.more}</a></span><span class=icon></span><a href="{PURL('articles')}">{$langs.latestarts}</a></div>
+				<div class="pros">
+					<ul>
+					{foreach $articles AS $article}
+					<li><a href="{if $article.linkurl}{$article.linkurl}" target="_blank"{else}{PURL('articles?id=' . $article.a_id)}"{/if}>{$article.title}</a> <span class=grey>({echo DisplayDate($article.created)})</span></li>
+					{/foreach}
+					</ul>
+				</div>
+			</div>
+			<!-- 最新文章 end -->
+
+			<!-- 推荐产品 start -->
+			<div class="xright">
+				<div class="divtop"><span class="span_r"><a href="{PURL('products?re')}">{$langs.more}</a></span><span class=icon></span><a href="{PURL('products?re')}">{$langs.reproducts}</a></div>
+				<div class="pros">
+				{foreach $products AS $product}
+				<div class="pro">
+					<div class="i_thumb_1"><table><tr><td><a href="{PURL('products?id=' . $product.pro_id)}" title="{$product.title}"><img original="{PrintImageURL($product.path, $product.filename)}"></a></td></tr></table></div>
+				</div>
+				{/foreach}
+				</div>
+			</div>
+			<!-- 推荐产品 end -->
+		</div>
+	</div>
+</div>
+
+<script>
+$(function() {
+	//发表评论
+	$(".submitcomm").click(function(e) {
+		openCOMM("{PURL('ajax/savecomm')}", parseInt($(this).attr("for_id")), $(this).attr("type"), "{$sys_key}", "{echo COOKIE_SAFE}", "{$sys_cookievalue}", "{$sys_code}");
+		e.preventDefault();
+	});
+
+	//提交询价
+	$(".do-enquiry").click(function(e) {
+		openQuiry("{PURL('ajax/savequiry')}", parseInt($(this).attr("pro_id")), "{$sys_key}", "{echo COOKIE_SAFE}", "{$sys_cookievalue}", "{$sys_code}");
+		e.preventDefault();
+	});
+
+	$(".fontZoom").fontZoom({ obj:".content1", max:36, min:10}); //字体放大
+});
+</script>
+
+{include footer.html}

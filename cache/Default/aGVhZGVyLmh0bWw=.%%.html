@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title><?php echo $this->_tpl_vars['title']; ?></title>
+<meta name="description" content="<?php echo $this->_tpl_vars['description']; ?>">
+<meta name="Keywords" content="<?php echo $this->_tpl_vars['keywords']; ?>">
+<link rel="shortcut icon" href="<?php echo $this->_tpl_vars['t_url']; ?>images/favicon.ico" type="image/x-icon"> 
+<link rel="stylesheet" href="<?php echo $this->_tpl_vars['t_url']; ?>styles.css" type="text/css">
+<link rel="stylesheet" href="<?php echo $this->_tpl_vars['public']; ?>js/easyDialog/easydialog.css" type="text/css">
+<script type="text/javascript">
+var this_uri = "<?php echo $this->_tpl_vars['this_uri']; ?>";
+var siteConfig={
+	siteurl: "<?php echo $this->_tpl_vars['baseurl']; ?>",
+	t_url: "<?php echo $this->_tpl_vars['t_url']; ?>",
+	sitename: "<?php echo $this->_tpl_vars['sitename']; ?>"
+};
+var user_rights = <?php echo $this->_tpl_vars['sys_user']['rights']; ?>; //全局js用户权限对象, 用于某些操作的初步权限验证, 勿删!
+</script>
+<script type="text/javascript" src="<?php echo $this->_tpl_vars['public']; ?>languages/<?php echo $this->_tpl_vars['js_lang']; ?>.js"></script><!-- js语言缓存在前加载 -->
+<script type="text/javascript" src="<?php echo $this->_tpl_vars['public']; ?>js/jquery-1.2.6.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->_tpl_vars['t_url']; ?>units.js"></script>
+</head>
+<body>
+<!-- easyDialog需要在body内加载 -->
+<script src="<?php echo $this->_tpl_vars['public']; ?>js/easyDialog/easydialog.min.js"></script>
+
+<!-- 顶部导航栏 start -->
+<div id="top">
+	<div class="w">
+		<div class="langs fl">
+			<dl class="first"><a href="<?php PURL(); ?>" title="<?php echo $this->_tpl_vars['langs']['home']; ?>"><dt class="home"></dt></a></dl>
+			<?php if(IS_CHINESE){; ?>
+				<dl><dt class="cn_on" title="<?php echo $this->_tpl_vars['langs']['chinese']; ?>"></dt></dl>
+				<dl class="last"><dt class="en" title="<?php echo $this->_tpl_vars['langs']['change_lan']; ?>"></dt></dl>
+			<?php }else{; ?>
+				<dl><dt class="cn" title="<?php echo $this->_tpl_vars['langs']['change_lan']; ?>"></dt></dl>
+				<dl class="last"><dt class="en_on" title="<?php echo $this->_tpl_vars['langs']['english']; ?>"></dt></dl>
+			<?php }; ?>
+		</div>
+		<div class="links fr">
+			<font class="<?php if(!$this->_tpl_vars['sys_user']['userid']){; ?>hide<?php }; ?>" id="user_links">
+				<dl class="first msg">
+					<?php echo $this->_tpl_vars['langs']['welcome']; ?>！<a href="<?php PURL('uc'); ?>"><font class="gr2" id="u_name"><?php echo $this->_tpl_vars['sys_user']['nickname']; ?></font></a>
+					<a href="<?php PURL('uc_pm'); ?>"><span class="u_pms<?php if($this->_tpl_vars['sys_user']['pms']){; ?> new<?php }; ?>" title="<?php echo $this->_tpl_vars['sys_user']['pms']; ?> <?php echo $this->_tpl_vars['langs']['u_pms']; ?>"><?php echo $this->_tpl_vars['sys_user']['pms']; ?></span></a>
+				</dl>
+				<dl class="menu">
+					<dt><a href="<?php PURL('uc'); ?>"><?php echo $this->_tpl_vars['langs']['uc']; ?></a><b></b></dt>
+					<dd>
+						<li><a href="<?php PURL('uc_edit'); ?>"><?php echo $this->_tpl_vars['langs']['u_edit']; ?></a></li>
+						<li><a href="<?php PURL('uc_avatar'); ?>"><?php echo $this->_tpl_vars['langs']['u_uploadav']; ?></a></li>
+						<li><a href="<?php PURL('uc_pm'); ?>" title="<?php echo $this->_tpl_vars['sys_user']['pms']; ?> <?php echo $this->_tpl_vars['langs']['u_pms']; ?>"><?php echo $this->_tpl_vars['langs']['u_mypm']; ?> <span class="u_pms<?php if($this->_tpl_vars['sys_user']['pms']){; ?> new<?php }; ?>" ><?php echo $this->_tpl_vars['sys_user']['pms']; ?></span></a></li>
+						<li><a href="<?php PURL('uc_enquiry'); ?>"><?php echo $this->_tpl_vars['langs']['u_myeq']; ?><?php if($this->_tpl_vars['sys_user']['q_num']){; ?> <i>(<?php echo $this->_tpl_vars['sys_user']['q_num']; ?>)</i><?php }; ?></a></li>
+						<li><a href="<?php PURL('uc_article'); ?>"><?php echo $this->_tpl_vars['langs']['u_myart']; ?><?php if($this->_tpl_vars['sys_user']['a_num']){; ?> <i>(<?php echo $this->_tpl_vars['sys_user']['a_num']; ?>)</i><?php }; ?></a></li>
+						<li><a href="<?php PURL('uc_acomment'); ?>"><?php echo $this->_tpl_vars['langs']['u_acomm']; ?><?php if($this->_tpl_vars['sys_user']['ac_num']){; ?> <i>(<?php echo $this->_tpl_vars['sys_user']['ac_num']; ?>)</i><?php }; ?></a></li>
+						<li><a href="<?php PURL('uc_product'); ?>"><?php echo $this->_tpl_vars['langs']['u_mypro']; ?><?php if($this->_tpl_vars['sys_user']['p_num']){; ?> <i>(<?php echo $this->_tpl_vars['sys_user']['p_num']; ?>)</i><?php }; ?></a></li>
+						<li><a href="<?php PURL('uc_pcomment'); ?>"><?php echo $this->_tpl_vars['langs']['u_pcomm']; ?><?php if($this->_tpl_vars['sys_user']['pc_num']){; ?> <i>(<?php echo $this->_tpl_vars['sys_user']['pc_num']; ?>)</i><?php }; ?></a></li>
+					</dd>
+				</dl>
+				<dl><a href="" class="u_logout"><font class=red><?php echo $this->_tpl_vars['langs']['logout']; ?></font></a></dl>
+			</font>
+			<font class="<?php if($this->_tpl_vars['sys_user']['userid']){; ?>hide<?php }; ?>" id="guest_links">
+				<dl class="first"><a href="<?php PURL('register'); ?>" id="u_register"><?php echo $this->_tpl_vars['langs']['joinnow']; ?></a></dl>
+				<dl><a href="" id="u_signin" class="gr2"><?php echo $this->_tpl_vars['langs']['signin']; ?></a></dl>
+			</font>
+			<dl class="add"><a href="javascript:addToFavorite();"><b></b><?php echo $this->_tpl_vars['langs']['addfavorite']; ?></a></dl>
+			<dl class="menu">
+				<dt><?php echo $this->_tpl_vars['langs']['services']; ?><b></b></dt>
+				<dd>
+					<li><a href="<?php PURL('about'); ?>"><?php echo $this->_tpl_vars['langs']['aboutus']; ?></a></li>
+					<li><a href="<?php PURL('about?id=2'); ?>"><?php echo $this->_tpl_vars['langs']['contactus']; ?></a></li>
+					<li><a href="<?php PURL('about?id=14'); ?>"><?php echo $this->_tpl_vars['langs']['culture']; ?></a></li>
+					<li><a href="<?php PURL('about?id=15'); ?>"><?php echo $this->_tpl_vars['langs']['organization']; ?></a></li>
+				</dd>
+			</dl>
+			<dl class="menu">
+				<dt><?php echo $this->_tpl_vars['langs']['companys']; ?><b></b></dt>
+				<dd>
+					<li><a href="<?php PURL('about?id=11'); ?>"><?php echo $this->_tpl_vars['langs']['company1']; ?></a></li>
+					<li><a href="<?php PURL('about?id=12'); ?>"><?php echo $this->_tpl_vars['langs']['company2']; ?></a></li>
+					<li><a href="<?php PURL('about?id=13'); ?>"><?php echo $this->_tpl_vars['langs']['company3']; ?></a></li>
+				</dd>
+			</dl>
+			<dl class="end"></dl>
+		</div>
+	</div>
+</div>
+<!-- 顶部导航栏 end -->
+
+<!-- Logo栏 start -->
+<div id="header" class="w">
+	<div id="logo"><a href="<?php PURL(); ?>" hidefocus="true" title="<?php echo $this->_tpl_vars['sitename']; ?>"><img src="<?php echo $this->_tpl_vars['t_url']; ?>images/logo.png" width="260" height="80" alt="<?php echo $this->_tpl_vars['sitename']; ?>"></a></div>
+	<!-- 顶部随机图片广告 共六个 可自行修改或删除 start -->
+	<?php $this->_tpl_vars['topadvs'] = array(
+			1=> 'http://www.weensoft.cn', 
+			2=> url('products'),
+			3=> url('about'),
+			4=> 'http://www.weensoft.cn',
+			5=> url('news'),
+			6=> url()
+	); ?>
+	<?php $this->_tpl_vars['rand'] = rand(1, 6); ?>
+	<div id="top_adv"><a href="<?php echo $this->_tpl_vars['topadvs'][$this->_tpl_vars['rand']]; ?>" target="_blank"><img src="<?php echo $this->_tpl_vars['t_url']; ?>images/top_adv<?php echo $this->_tpl_vars['rand']; ?>.jpg"></a></div>
+	<!-- 顶部随机图片广告 共六个 可自行修改或删除 end -->
+</div>
+<!-- Logo栏 end -->
+
+<!-- 菜单栏 start -->
+<div class="w topmenu">
+	<div id="menu">
+		<dl><dt><a href="<?php PURL(); ?>" hidefocus="true"><?php echo $this->_tpl_vars['langs']['home']; ?></a></dt></dl>
+		<dl class="menu">
+			<dt><a href="<?php PURL('products'); ?>" hidefocus="true"><?php echo $this->_tpl_vars['langs']['products']; ?></a><b></b></dt>
+			<dd class="cats">
+				<?php echo $this->_tpl_vars['pcategories']; ?>
+				<li class="last"></li>
+			</dd>
+		</dl>
+		<dl class="menu">
+			<dt><a href="<?php PURL('articles'); ?>" hidefocus="true"><?php echo $this->_tpl_vars['langs']['articles']; ?></a><b></b></dt>
+			<dd class="cats">
+				<?php echo $this->_tpl_vars['acategories']; ?>
+				<li class="last"></li>
+			</dd>
+		</dl>
+		<dl><dt><a href="<?php PURL('news'); ?>" hidefocus="true"><?php echo $this->_tpl_vars['langs']['news']; ?></a></dt></dl>
+		<dl class="menu">
+			<dt><a href="<?php PURL('about'); ?>" hidefocus="true"><?php echo $this->_tpl_vars['langs']['aboutus']; ?></a><b></b></dt>
+			<dd class="normal">
+				<li><a href="<?php PURL('about?id=14'); ?>"><?php echo $this->_tpl_vars['langs']['culture']; ?></a></li>
+				<li><a href="<?php PURL('about?id=15'); ?>"><?php echo $this->_tpl_vars['langs']['organization']; ?></a></li>
+				<li><a href="<?php PURL('about?id=11'); ?>"><?php echo $this->_tpl_vars['langs']['company1']; ?></a></li>
+				<li><a href="<?php PURL('about?id=12'); ?>"><?php echo $this->_tpl_vars['langs']['company2']; ?></a></li>
+				<li><a href="<?php PURL('about?id=13'); ?>"><?php echo $this->_tpl_vars['langs']['company3']; ?></a></li>
+			</dd>
+		</dl>
+		<dl><dt><a href="<?php PURL('about?id=2'); ?>" hidefocus="true"><?php echo $this->_tpl_vars['langs']['contactus']; ?></a></dt></dl>
+	</div>
+	<div class="web_s">
+		<form action="<?php PURL('search'); ?>" method="post">
+			<input type="text" name="s" class="key" value="<?php echo $this->_tpl_vars['keyword']; ?>"><input type="submit" class="btn" hidefocus="true" value="">
+		</form>
+	</div>
+</div>
+<!-- 菜单栏 end -->
+
+<!-- 当前位置导航栏 start -->
+<?php if($this->_tpl_vars['pagenav']){; ?>
+<div class="w">
+	<div class="nav">
+		<div id="pagenav"><span class=navicon></span><?php echo $this->_tpl_vars['langs']['yourarehere']; ?>&nbsp;&nbsp;<?php echo $this->_tpl_vars['pagenav']; ?></div>
+	</div>
+</div>
+<?php }; ?>
+<!-- 当前位置导航栏 end -->

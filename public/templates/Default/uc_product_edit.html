@@ -1,0 +1,277 @@
+{include header.html}
+
+<!-- swf英文上传按钮CSS样式 start -->
+{if !IS_CHINESE}
+<style type="text/css">
+#swfupload .btnUpload,
+#swfupload .btnUpload_disabled,
+#swfupload .btnCancel,
+#swfupload .btnCancel_disabled {
+	background-image:url({$public}js/swfupload/images/swfupload_buttons_en.gif) !important;
+}
+</style>
+{/if}
+
+<div class="w uc">
+	<!-- 包含用户菜单 -->
+	{include uc_menu.html}
+	{$KE_lang = Iif(IS_CHINESE, 'zh_CN', 'en')}
+
+	<div class="r fr">
+		<div class="t">{$submenu}</div>
+		<div class="con">
+		<link href="{$public}js/swfupload/css/swfupload.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="{$public}js/swfupload/swfupload.js"></script>
+		<script type="text/javascript" src="{$public}js/swfupload/swfupload.queue.js"></script>
+		<script type="text/javascript" src="{$public}js/swfupload/swfupload.fileprogress.js"></script>
+		<script type="text/javascript" src="{$public}js/swfupload/swfupload.handlers.js"></script>
+		<script charset="utf-8" src="{$public}js/kindeditor/kindeditor.js"></script>
+		<script charset="utf-8" src="{$public}js/kindeditor/lang/{$KE_lang}.js"></script>
+		<script type="text/javascript">
+			KindEditor.ready(function(K) {
+				var editor88 = K.create('textarea[name="content"]', {
+					uploadJson : "{PURL('editor_upload')}",
+					fileManagerJson :  "{PURL('editor_file_manager')}",
+					allowFileManager : true,
+					langType: "{$KE_lang}",
+				});
+
+				var editor66 = K.create('textarea[name="content_en"]', {
+					uploadJson : "{PURL('editor_upload')}",
+					fileManagerJson :  "{PURL('editor_file_manager')}",
+					allowFileManager : true,
+					langType: "{$KE_lang}",
+				});
+			});
+
+			var swfu;
+			window.onload = function() {
+				var settings = {
+					flash_url : "{$public}js/swfupload/swfupload.swf",
+					upload_url: "{PURL('swfupload')}",
+					post_params: { "sessionid": "{$sys_user.sessionid}" },
+					file_size_limit : "2 MB",
+					file_types : "*.jpg;*.png;*.gif;*.jpeg",
+					file_types_description : "Image Files",
+					file_upload_limit : 20,
+					file_queue_limit : 20,
+					custom_settings : {
+						progressTarget : "fsUploadProgress",
+						cancelButtonId : "btnCancel",
+						uploadButtonId : "btnUpload",
+						filesStatusId: "filesStatus"
+					},
+
+					button_image_url: "{$public}js/swfupload/images/swfupload_btn_flash{if !IS_CHINESE}_en{/if}.png",
+					button_width: "78",
+					button_height: "28",
+					button_cursor: SWFUpload.CURSOR.HAND,
+					button_placeholder_id: "spanButtonPlaceHolder",
+					
+					file_queued_handler : fileQueued,
+					file_queue_error_handler : fileQueueError,
+					file_dialog_complete_handler : fileDialogComplete,
+					upload_start_handler : uploadStart,
+					upload_progress_handler : uploadProgress,
+					upload_error_handler : uploadError,
+					upload_success_handler : uploadSuccess,
+					upload_complete_handler : uploadComplete,
+					upload_completeinfo_handler : uploadCompleteInfo
+				};
+
+				swfu = new SWFUpload(settings);
+			 };
+		</script>
+		<form id="editorform88" name="editorform88" method="post" enctype="multipart/form-data" action="{PURL('uc_product/save')}">
+			<input type="hidden" name="pro_id" value="{$pro_id}">
+			<input type="hidden" name="is_show" value="{$product.is_show}">
+			<table class="tb1">
+			{if $uploaded_counts > 0}
+			<tr>
+				<td><b>{$langs.u_uploaded}:</b></td>
+				<td>
+					<font class=redb>{$langs.u_warning}:</font> {echo str_replace('//1', $uploaded_counts, $langs.u_warninginfo)}<BR>{$uploaded_file_str}<BR><a class="link-btn ajax-del">{$langs.u_deleteall}</a>
+				</td>
+			</tr>
+			{/if}
+			{if $pro_id}
+			<tr>
+				<td>{if $product.is_show==1}<b>{$langs.u_online}</b>{elseif $product.is_show==0}<font class=redb>{$langs.forbidden}</font>{else}<font class=redb>{$langs.u_waiting}</font>{/if}</td>
+				<td>{if $product.is_show == 1}<a href="{PURL('products')}?id={$pro_id}" target="_blank">{/if}<input type="hidden" name="pro_path" value="{$product.path}"><input type="hidden" name="pro_filename" value="{$product.filename}"><img src="{PrintImageURL($product.path, $product.filename)}" align="absmiddle" class="ZoomImg">{if $product.is_show == 1}</a>{/if}</td>
+			</tr>
+			{/if}
+			<tr>
+				<td><b>{if $pro_id}{$langs.u_uploadmain2}{else}{$langs.u_uploadmain}{/if}</b></td>
+				<td>
+					<div class="fileupload" id="fileupload">
+					<input type="text" class="file_text" id="file_text" disabled>
+					<input type="button" class="cancel" value="{$langs.selectfile}">
+					<input type="file" name="imagefile" class="file_input" size="46" onchange="$('#file_text').val(this.value);">
+					</div>&nbsp;&nbsp;&nbsp;&nbsp;<i>{if !$pro_id}<font class=red>*&nbsp;&nbsp;&nbsp;</font>{/if}{$langs.u_fileinfo}</i>
+				</td>
+			</tr>
+			{if $pro_id AND $del_p}
+			<tr>
+				<td><b>{$langs.u_delete}</b></td>
+				<td><input type="checkbox" name="deletethisproduct" value="1"> <b>{$langs.yes}:</b> <font class=redb>{$langs.u_becarefull}</font></td>
+			</tr>
+			{/if}
+			<tr>
+				<td><b>{$langs.u_belongto}:</b></td>
+				<td>
+					<input type="hidden" name="oldcat_id" value="{$product.cat_id}">
+					<select name="cat_id">
+					<option value="0">-- {$langs.u_choose} --</option>
+					{$procat_options}
+					</select>&nbsp; <font class=red>*</font>
+				</td>
+			</tr>
+			<tr>
+				<td><b>{$langs.protitle} (<span class=blue>{$langs.chinese}</span>):</b></td>
+				<td><input type="text" name="title" value="{$product.title}"  size="50">{if IS_CHINESE}&nbsp; <font class=red>*</font>{/if}</td>
+			</tr>
+			<tr>
+				<td><b>{$langs.protitle} (<span class=red>{$langs.english}</span>):</b></td>
+				<td><input type="text" name="title_en" value="{$product.title_en}"  size="50">{if !IS_CHINESE}&nbsp; <font class=red>*</font>{/if}</td>
+			</tr>
+			<tr>
+				<td><b>{$langs.price} (<span class=blue>{$langs.chinese}</span>):</b></td>
+				<td><input type="text" name="price" value="{$product.price}"  size="20"></td>
+			</tr>
+			<tr>
+				<td><b>{$langs.price} (<span class=red>{$langs.english}</span>):</b></td>
+				<td><input type="text" name="price_en" value="{$product.price_en}"  size="20"></td>
+			</tr>
+			<tr>
+				<td><b>{$langs.u_keywords} (<span class=blue>{$langs.chinese}</span>):</b></td>
+				<td><input type="text" name="keywords" value="{$product.keywords}"  size="50"></td>
+			</tr>
+			<tr>
+				<td><b>{$langs.u_keywords} (<span class=red>{$langs.english}</span>):</b></b></td>
+				<td><input type="text" name="keywords_en" value="{$product.keywords_en}"  size="50"></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<div class="ok_tab">
+						<div class="ok_tabheader">
+							<ul id="tabContent-li-ok_tabOn-">
+								<li class="ok_tabOn"><a href="javascript:void(0)" rel="1" hidefocus="true">{$langs.u_pdescription} (<font class=blue>{$langs.chinese}</font>)</a></li>
+								<li><a href="javascript:void(0)" rel="2" hidefocus="true">{$langs.u_pdescription} (<font class=red>{$langs.english}</font>)</a></li>
+							</ul>
+						</div>
+						<div id="tabContent_1" class="tabContent">
+						 <textarea name="content" style="width:100%;height:400px;visibility:hidden;" id="content">{$product.content}</textarea>
+						</div>
+
+						<div id="tabContent_2" class="tabContent" style="display: none;">
+						<textarea name="content_en" style="width:100%;height:400px;visibility:hidden;" id="content_en">{$product.content_en}</textarea>
+						</div>
+
+						<div class="ok_tabbottom">
+							<span class="tabbottomL"></span>
+							<span class="tabbottomR"></span>
+						</div>
+					</div>
+				</td>
+			</tr>
+			{if $pro_id AND $groupimages}
+			<tr>
+				<td><b>{$langs.u_glist}:</b></td>
+				<td>
+				<div style="width:600px;">
+				{foreach $groupimages AS $gimage}
+					<div class="th_gr">
+						<div class="i_thumb_1"><table><tr><td><img src="{PrintImageURL($gimage.path, $gimage.filename)}"></td></tr></table></div>
+						<div class="status"><input type="checkbox" name="gis_shows[]" value="{$gimage.g_id}" {if $gimage.is_show}CHECKED{/if}>&nbsp;{$langs.u_publish}</div>
+						<div class="del"><input type="checkbox" name="deletegimages[]" value="{$gimage.g_id}">&nbsp;{$langs.delete}</div>
+					</div>
+				{/foreach}
+				</div>
+				</td>
+			</tr>
+			{/if}
+			<tr>
+				<td><b>{$langs.u_uploadg}:</b></td>
+				<td>
+					<div id="swfupload">
+						<div class="fieldset">
+							<span class="legend">{$langs.file}{$langs.list}</span>
+							<table id="file_table" cellpadding="0" cellspacing="0" class="file_table">
+								<thead>
+									<tr>
+										<th width="30">#</th>
+										<th width="180">{$langs.file}</th>
+										<th width="60">{$langs.filesize}</th>
+										<th width="180">{$langs.status}</th>
+										<th width="40">{$langs.operate}</th>
+									</tr>
+								</thead>
+								<tbody id="fsUploadProgress"></tbody>
+							</table>
+							<div class="filesStatus" id="filesStatus"><span class=light>{$langs.u_fileinfo}</span></div>
+						</div>
+						<div class="buttons">
+							<span id="spanButtonPlaceHolder"></span>
+							<input id="btnUpload" type="button" onfocus="this.blur();" onclick="swfu.startUpload();" disabled="disabled" class="btnUpload_disabled">
+							<input id="btnCancel" type="button" onfocus="this.blur();" onclick="swfu.cancelQueue();" disabled="disabled" class="btnCancel_disabled">
+						</div>
+					</div>
+				</td>
+			</tr>
+			</table>
+			<div class="submit ac"><input type="submit" value="{$langs.save}" class="save"></div>
+		</form>
+		</div>
+	</div>
+</div>
+<script>
+$(function(){
+	new tab('tabContent-li-ok_tabOn-', '-');
+
+	$(".uc a.open").click(function(e){
+		var _me=$(this);
+		var w = parseInt(_me.attr("w"));
+		var h = parseInt(_me.attr("h"));
+		var filename=_me.html();
+
+		if(w >= h){
+			h = parseInt(h * 400 / w);
+			w = 400;
+		}else{
+			w = parseInt(w * 400 / h);
+			h = 400;
+		}
+
+		easyDialog.open({
+			container:{
+				header: "{$langs.u_viewdel}",
+				content: "<img width=\""+w+"\"  height=\""+h+"\"  src=\"{echo SYSDIR}uploads/" + filename + "\">",
+				yesFn:function(){
+					ajax("{PURL('uc_ajax/deluploaded')}", { action: "deleteone", file: filename}, function(data){
+						_me.parent().hide();
+					});
+				},
+				yesText: langs.delete,
+				noFn:true,
+				noText: langs.d_no
+			},
+			width:422
+		});
+
+		e.preventDefault();
+	});
+
+	$(".uc a.ajax-del").click(function(e){
+		var _me=$(this);
+		showDialog("{$langs.u_suredelg}", '', function(){
+			ajax("{PURL('uc_ajax/deluploaded')}", "", function(data){
+				_me.parent().parent().hide();
+			});
+		});
+
+		e.preventDefault();
+	});
+});
+</script>
+
+{include footer.html}

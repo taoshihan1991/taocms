@@ -1,0 +1,105 @@
+{include header.html}
+
+<div class="w uc">
+	<!-- 包含用户菜单 -->
+	{include uc_menu.html}
+
+	<div class="r fr">
+		<div class="t">{$submenu}</div>
+		<div class="con">
+		<form id="u_edit_form" onsubmit="return false;">
+			<table class="tb1">
+			<tr>
+				<td><b>{$langs.username}:</b></td>
+				<td>{$sys_user.username}<u></u>ID: {$sys_user.userid}<u></u>Email: {$sys_user.email}</td>
+			</tr>
+			<tr>
+				<td><b>{$langs.nickname}:</b></td>
+				<td><input type="text" name="nickname" size="20" value="{$sys_user.nickname}"></td>
+			</tr>
+			<tr>
+				<td><b>{$langs.password}:</b></td>
+				<td><input type="password" name="password" size="20" value=""><i>{$langs.leaveempty}</i></td>
+			</tr>
+			<tr>
+				<td><b>{$langs.repassword}:</b></td>
+				<td><input type="password" name="repassword" size="20" value=""></td>
+			</tr>
+			<tr>
+				<td><b>{$langs.company}:</b></td>
+				<td><input type="text" name="company" value="{$sys_user.company}" size="40"></td>
+			</tr>
+			<tr>
+				<td><b>{$langs.address}:</b></td>
+				<td><input type="text" name="address" value="{$sys_user.address}" size="40"></td>
+			</tr>
+			<tr>
+				<td><b>{$langs.postcode}:</b></td>
+				<td><input type="text" name="postcode" value="{$sys_user.postcode}" size="40"></td>
+			</tr>
+			<tr>
+				<td><b>{$langs.tel}:</b></td>
+				<td><input type="text" name="tel" value="{$sys_user.tel}" size="40"></td>
+			</tr>
+			<tr>
+				<td><b>{$langs.fax}:</b></td>
+				<td><input type="text" name="fax" value="{$sys_user.fax}" size="40"></td>
+			</tr>
+			<tr>
+				<td><b>{$langs.online}:</b></td>
+				<td><input type="text" name="online" value="{$sys_user.online}" size="40"></td>
+			</tr>
+			<tr>
+				<td><b>{$langs.website}:</b></td>
+				<td><input type="text" name="website" value="{$sys_user.website}" size="40"></td>
+			</tr>
+			<tr>
+				<td><b>{$langs.profile}:</b></td>
+				<td><textarea name="profile" style="height:80px;width:400px;">{$sys_user.profile}</textarea></td>
+			</tr>
+			</table>
+			<div class="submit ac"><input type="submit" value="{$langs.save}" class="save"><b class="ajaxloader"></b></div>
+		</form>
+		</div>
+	</div>
+</div>
+<script>
+$(function(){
+	$("#u_edit_form input.save").click(function(e){
+		var form = $("#u_edit_form");
+		var passinput = form.find("input[name=password]");
+		var password = $.trim(passinput.val());
+
+		if(password){
+			if(validate_input(password, "password")){
+				var repassinput = form.find("input[name=repassword]");
+				if(password != $.trim(repassinput.val())){
+					showInfo(langs.er_pnotsame, "", function(){
+						$("html,body").animate({
+							scrollTop: form.offset().top - 100
+						}, 100);
+						repassinput.focus();
+					});
+					return false;
+				}
+			}else{
+				showInfo(langs.enter_ps + "(4 - 20" + langs.characters +") !", "", function(){
+					$("html,body").animate({
+						scrollTop: form.offset().top - 100
+					}, 100);
+					passinput.focus();
+				});
+				return false;
+			}
+		}
+
+		ajax("{PURL('uc_ajax/edit')}", form.serialize(), function(data){
+			showInfo(langs.u_edited, '', '', 2, true);
+		}, ".ajaxloader", false, true, "loading2");
+
+		e.preventDefault();
+	});
+});
+</script>
+
+{include footer.html}

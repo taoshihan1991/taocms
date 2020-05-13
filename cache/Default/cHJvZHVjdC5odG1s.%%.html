@@ -1,0 +1,149 @@
+<?php $this->display('header.html'); ?>
+
+<!-- 这两个鼠标样式需要全URL, 否则不兼容 start -->
+<style type="text/css">
+#pro .to_left{
+	cursor:url(<?php echo $this->_tpl_vars['t_url']; ?>images/to_left.cur), auto;
+}
+#pro .to_right{
+	cursor:url(<?php echo $this->_tpl_vars['t_url']; ?>images/to_right.cur), auto;
+}
+</style>
+
+<a name="g"></a><!-- 锚点 -->
+<div id="pro" class="w pro_main">
+	<div class="bigimage">
+	<img src="<?php PrintImageURL($this->_tpl_vars['product']['path'], $this->_tpl_vars['product']['filename'], 3); ?>" id="big_image">
+	</div>
+
+	<!-- 组图片 start -->
+	<?php if($this->_tpl_vars['gimages']){; ?>
+	<div class="gimage">
+		<div class="lev_rollLeft"></div>
+		<div class="lev_brandList">
+			<div class="lev_brandListC" id="group_images"><?php echo $this->_tpl_vars['gimages']; ?></div>
+		</div>
+		<div class="lev_rollRight"></div>
+	</div>
+	<script type="text/javascript">
+	$(function() {
+		$("#group_images").GimageMove({
+			prevId: ".lev_rollLeft",
+			nextId: ".lev_rollRight",
+			offbtnleft: "off_lev_rollLeft",
+			offbtnright: "off_lev_rollRight",
+			bigId: "#big_image",  //大图片JQ选择器
+			left: "to_left", //大图片向左点击有效时的样式
+			right: "to_right",
+			disable: "disable" //大图无法点击时的样式
+		});
+	});
+	</script>
+	<?php }; ?>
+	<!-- 组图片 end -->
+
+	<div class="disc">
+		<div class="xleft">
+			<div class="t"><b class=grey><?php echo $this->_tpl_vars['langs']['protitle']; ?>:</b><div><?php echo $this->_tpl_vars['product']['title']; ?></div><a href="" class="link-btn link-bg2 do-enquiry" pro_id="<?php echo $this->_tpl_vars['product']['pro_id']; ?>"><?php echo $this->_tpl_vars['langs']['wantenquiry']; ?></a></div>
+			<table class="tb">
+			<tr>
+			<td class="td1">
+				<a href="" class="pm" toname="<?php echo $this->_tpl_vars['product']['username']; ?>" toid="<?php echo $this->_tpl_vars['product']['userid']; ?>"><img src="<?php PrintAvatar($this->_tpl_vars['product']['userid']); ?>" class="user_avatar" title="<?php echo $this->_tpl_vars['product']['username']; ?>"></a>
+			</td>
+			<td class="td2">
+				<div class="s">
+					<?php echo $this->_tpl_vars['langs']['editor']; ?>: <a href="" class="pm" toname="<?php echo $this->_tpl_vars['product']['username']; ?>" toid="<?php echo $this->_tpl_vars['product']['userid']; ?>" title="<?php echo $this->_tpl_vars['langs']['u_sendpm']; ?>"><?php echo $this->_tpl_vars['product']['username']; ?>&nbsp; <img src="<?php echo $this->_tpl_vars['t_url']; ?>images/pm.png"></a><u></u>
+					<?php echo $this->_tpl_vars['langs']['date']; ?>: <?php echo DisplayDate($this->_tpl_vars['product']['created']); ?><u></u>
+					<?php echo $this->_tpl_vars['langs']['clicks']; ?>: <?php echo $this->_tpl_vars['product']['clicks']; ?><u></u>
+					<a href="#c"><?php echo $this->_tpl_vars['langs']['comms']; ?>: <?php echo $this->_tpl_vars['comms']; ?></a>
+					<?php if($this->_tpl_vars['product']['price']){; ?><u></u><?php echo $this->_tpl_vars['langs']['price']; ?>: <?php echo $this->_tpl_vars['product']['price']; ?><?php }; ?>
+					<div class="fontZoom">
+						<a href="" class="icons font_down" title="<?php echo $this->_tpl_vars['langs']['zoomout']; ?>"></a>
+						<a href="" class="icons font_up" title="<?php echo $this->_tpl_vars['langs']['zoomin']; ?>"></a>
+					</div>
+				</div>
+				<div class="content1"><?php echo html($this->_tpl_vars['product']['content']); ?></div>
+			</td>
+			</tr>
+			</table>
+
+			<a name="c"></a>
+			<div class="t ctop"><b class=grey><?php echo $this->_tpl_vars['langs']['protitle']; ?>:</b><div><?php echo $this->_tpl_vars['product']['title']; ?></div><a href="" class="link-btn link-bg3 submitcomm" for_id="<?php echo $this->_tpl_vars['product']['pro_id']; ?>" type="1"><?php echo $this->_tpl_vars['langs']['submitc']; ?> <font class=grey>(<?php echo $this->_tpl_vars['comms']; ?>)</font></a></div>
+
+			<table class="tb c" id="commentstb">
+			<?php $this->_tpl_vars['num'] = 1; ?>
+			<?php foreach($this->_tpl_vars['comments'] AS $this->_tpl_vars['comm']){; ?>
+				<?php if($this->_tpl_vars['comm']['userid']){; ?>
+					<?php $this->_tpl_vars['link1'] = '<a href="" class="pm" toname="' . $this->_tpl_vars['comm']['username'] . '" toid="' . $this->_tpl_vars['comm']['userid'] . '" title="' . $this->_tpl_vars['langs']['u_sendpm'] . '">'; ?>
+					<?php $this->_tpl_vars['link2'] = '</a>'; ?>
+					<?php $this->_tpl_vars['username'] = $this->_tpl_vars['comm']['username'] . '&nbsp; <img src="' . $this->_tpl_vars['t_url'] . 'images/pm2.png">'; ?>
+				<?php }else{; ?>
+					<?php $this->_tpl_vars['link1'] = ''; ?>
+					<?php $this->_tpl_vars['link2'] = ''; ?>
+					<?php $this->_tpl_vars['username'] = '[ ' . $this->_tpl_vars['langs']['guest'] . ' ] ' . $this->_tpl_vars['comm']['username']; ?>
+				<?php }; ?>
+				<tr class="<?php if(is_int($this->_tpl_vars['num']/2)){; ?>c2<?php }; ?>">
+				<td class="td1"><?php echo $this->_tpl_vars['link1']; ?><img src="<?php PrintAvatar($this->_tpl_vars['comm']['userid']); ?>" class="user_avatar" title="<?php echo $this->_tpl_vars['comm']['username']; ?>"><?php echo $this->_tpl_vars['link2']; ?></td>
+				<td class="td2">
+					<div class="s">
+						<?php echo $this->_tpl_vars['link1']; ?><?php echo $this->_tpl_vars['username']; ?><?php echo $this->_tpl_vars['link2']; ?>
+						<span><?php echo DisplayDate($this->_tpl_vars['comm']['created'], '', 1); ?>&nbsp;&nbsp; #<?php echo $this->_tpl_vars['start'] + $this->_tpl_vars['num']; ?></span>
+					</div>
+					<div class="comm"><?php echo nl2br($this->_tpl_vars['comm']['content']); ?></div>
+				</td>
+				</tr>
+				<?php $this->_tpl_vars['num'] += 1; ?>
+			<?php }; ?>
+			</table>
+			<?php echo $this->_tpl_vars['pagelist']; ?>
+		</div>
+
+		<div class="xcontainer">
+			<!-- 最新文章 start -->
+			<div class="xright">
+				<div class="divtop"><span class="span_r"><a href="<?php PURL('articles'); ?>"><?php echo $this->_tpl_vars['langs']['more']; ?></a></span><span class=icon></span><a href="<?php PURL('articles'); ?>"><?php echo $this->_tpl_vars['langs']['latestarts']; ?></a></div>
+				<div class="pros">
+					<ul>
+					<?php foreach($this->_tpl_vars['articles'] AS $this->_tpl_vars['article']){; ?>
+					<li><a href="<?php if($this->_tpl_vars['article']['linkurl']){; ?><?php echo $this->_tpl_vars['article']['linkurl']; ?>" target="_blank"<?php }else{; ?><?php PURL('articles?id=' . $this->_tpl_vars['article']['a_id']); ?>"<?php }; ?>><?php echo $this->_tpl_vars['article']['title']; ?></a> <span class=grey>(<?php echo DisplayDate($this->_tpl_vars['article']['created']); ?>)</span></li>
+					<?php }; ?>
+					</ul>
+				</div>
+			</div>
+			<!-- 最新文章 end -->
+
+			<!-- 推荐产品 start -->
+			<div class="xright">
+				<div class="divtop"><span class="span_r"><a href="<?php PURL('products?re'); ?>"><?php echo $this->_tpl_vars['langs']['more']; ?></a></span><span class=icon></span><a href="<?php PURL('products?re'); ?>"><?php echo $this->_tpl_vars['langs']['reproducts']; ?></a></div>
+				<div class="pros">
+				<?php foreach($this->_tpl_vars['products'] AS $this->_tpl_vars['product']){; ?>
+				<div class="pro">
+					<div class="i_thumb_1"><table><tr><td><a href="<?php PURL('products?id=' . $this->_tpl_vars['product']['pro_id']); ?>" title="<?php echo $this->_tpl_vars['product']['title']; ?>"><img original="<?php PrintImageURL($this->_tpl_vars['product']['path'], $this->_tpl_vars['product']['filename']); ?>"></a></td></tr></table></div>
+				</div>
+				<?php }; ?>
+				</div>
+			</div>
+			<!-- 推荐产品 end -->
+		</div>
+	</div>
+</div>
+
+<script>
+$(function() {
+	//发表评论
+	$(".submitcomm").click(function(e) {
+		openCOMM("<?php PURL('ajax/savecomm'); ?>", parseInt($(this).attr("for_id")), $(this).attr("type"), "<?php echo $this->_tpl_vars['sys_key']; ?>", "<?php echo COOKIE_SAFE; ?>", "<?php echo $this->_tpl_vars['sys_cookievalue']; ?>", "<?php echo $this->_tpl_vars['sys_code']; ?>");
+		e.preventDefault();
+	});
+
+	//提交询价
+	$(".do-enquiry").click(function(e) {
+		openQuiry("<?php PURL('ajax/savequiry'); ?>", parseInt($(this).attr("pro_id")), "<?php echo $this->_tpl_vars['sys_key']; ?>", "<?php echo COOKIE_SAFE; ?>", "<?php echo $this->_tpl_vars['sys_cookievalue']; ?>", "<?php echo $this->_tpl_vars['sys_code']; ?>");
+		e.preventDefault();
+	});
+
+	$(".fontZoom").fontZoom({ obj:".content1", max:36, min:10}); //字体放大
+});
+</script>
+
+<?php $this->display('footer.html'); ?>

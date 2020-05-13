@@ -1,0 +1,109 @@
+<!dOCTYPE html PUBLIC "-//W3C//dTd XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/dTd/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<title>{$title}</title>
+<meta name="keywords" content="{$keywords}">
+<meta name="description" content="{$description}">
+<link href="{$public}static/css/yin2stylecn.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{$public}static/js/sy_tu.js"></script>
+<script type="text/javascript">
+  var this_uri = "{$this_uri}";
+  var siteConfig={
+    siteurl: "{$baseurl}",
+    t_url: "{$t_url}",
+    sitename: "{$sitename}"
+  };
+  var user_rights = {$sys_user.rights}; //全局js用户权限对象, 用于某些操作的初步权限验证, 勿删!
+  </script>
+  <script type="text/javascript" src="{$public}languages/{$js_lang}.js"></script><!-- js语言缓存在前加载 -->
+  <script type="text/javascript" src="{$public}js/jquery-1.2.6.min.js"></script>
+  <script type="text/javascript" src="{$t_url}units.js"></script>
+</head>
+<body>
+<!-- easyDialog需要在body内加载 -->
+<script src="{$public}js/easyDialog/easydialog.min.js"></script>
+<link rel="stylesheet" href="{$public}js/easyDialog/easydialog.css" type="text/css">
+<div id="mainsy">
+
+
+<script language="JavaScript" src="{$public}static/js/mm_menu.js"></script>
+<div class="top" id="top">
+<div class="headsy">
+	<div class="logo"></div>
+	 
+	<div class="top_r">
+		<div class="languages">
+		<div class="lan1"><img src="{$public}static/picture/yuyan_tu2.gif" border="0">&nbsp;<a href="javascript:void(0);" class="yuyan" id="translateLink"><span class="yuyan cn" style=" color:#FFFFFF;">CHINESE</span></a></div>
+		<div class="lan2"><img src="{$public}static/picture/yuyan_tu1.gif" border="0">&nbsp;<a href="javascript:void(0);"><span class="yuyan en" style=" color:#FFFFFF;">ENGLISH</span></a></div>
+
+		</div>
+		<div class="clear"></div>
+		<div class="search">
+		<form action="{PURL('search')}" method="post" name="search" id="search">
+		 <input onkeydown='this.style.color="#000"' id="key" class="sea_int" onfocus='this.value=""' name="s" value="{$langs.search}">
+		<input name="button1" type="submit" class="serach_submit" id="button1" value="{$langs.search}">
+		 </form>
+		<div class="clear"></div>
+		</div>
+	</div>
+</div>
+<div class="menu">
+
+<div class="dhleft"><img src="{$public}static/picture/menu_left.jpg"></div>
+	
+			<div class="nav1">
+			<a href="{PURL()}"><span class="menuzi">{$langs.home}</span></a>
+			</div>
+		
+			<div class="nav">
+			<a href="{PURL('about')}"><span class="menuzi">{$langs.aboutus}</span></a>
+			</div>
+		
+			<div class="nav">
+			<a href="{PURL('products')}"><span class="menuzi">{$langs.randproduct}</span></a>
+			</div>
+		
+			<div class="nav">
+			<a href="{PURL('articles?cat=2')}"><span class="menuzi">{$langs.news}</span></a>
+			</div>
+		
+			<div class="nav">
+			<a href="{PURL('articles?cat=1')}"><span class="menuzi">{$langs.qua}</span></a>
+			</div>
+		
+			<div class="nav">
+			<a href="{PURL('about?id=12')}"><span class="menuzi">{$langs.guestbook}</span></a>
+			</div>
+		
+			<div class="nav">
+			<a href="{PURL('about?id=2')}"><span class="menuzi">{$langs.contactus}</span></a>
+			</div>
+		
+<div class="dhright"><img src="{$public}static/picture/menu_right.jpg"></div>
+
+
+</div>
+</div>
+<div id="top_flash">
+<script src="{$public}static/js/swfobject.js" type="text/javascript"></script>
+<div id="swfContent"></div>
+<script type="text/javascript">
+	{if IS_CHINESE}
+	var xmlData="<list><item><img>{$public}static/flash/1.jpg</img><url></url></item><item><img>{$public}static/flash/2.jpg</img><url></url></item><item><img>{$public}static/flash/3.jpg</img><url></url></item></list>";
+	{else}
+	var xmlData="<list><item><img>{$public}static/flash/en_1.jpg</img><url></url></item><item><img>{$public}static/flash/en_2.jpg</img><url></url></item><item><img>{$public}static/flash/en_3.jpg</img><url></url></item></list>";
+	{/if}
+	var flashvars = {
+    xmlData:xmlData
+  };
+	var params = {
+    menu:false,wmode:"opaque"
+  };
+	var attributes = {
+
+  };
+	swfobject.embedSWF("{$public}static/flash/swfobject.swf", "swfContent", "1000", "400", "9","{$public}static/flash/expressInstall.swf", flashvars, params, attributes);
+</script>
+</div> 

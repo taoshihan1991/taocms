@@ -1,0 +1,89 @@
+{include header.html}
+
+<div class="zbmain">
+
+    {include left.html}
+
+    <div class="zbright">
+
+        <div id="right_main">
+
+            <!--产品-->
+            <div class="right_dh">
+                <div class="right_dh_l"></div>
+                <div class="right_dh_txt">{$pagenav}</div>
+                <div class="right_dh_r"></div>
+                <div class="clear"></div>
+            </div>
+            <div class="right_ny ">
+                <table border="0" cellpadding="0" cellspacing="0" class="syprony">
+                    <tr>
+                        {foreach $products as $key=>$product}
+                        <td valign="top" style=" padding:10px 6px 6px 6px;">
+                            <table width="150" border="0" cellpadding="0" cellspacing="0"
+                                style="margin:0 auto 10px auto;">
+                                <tr>
+                                    <td height="150" align="center" class="border_hui"
+                                        onmouseover="this.className='border_hui1'"
+                                        onmouseout="this.className='border_hui'">
+                                        <a href="{PURL('products?id=' . $product.pro_id)}"><img
+                                                style="width:150px;height:150px;"
+                                                src="{PrintImageURL($product.path, $product.filename, 2)}"
+                                                title="{$product.title}" border="0"></a></td>
+                                </tr>
+                                <tr>
+                                    <td class="border_hui_title"><a
+                                            href="{PURL('products?id=' . $product.pro_id)}"><br>{$product.title}</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        {if (($key+=1)&&($key%4==0))}
+                    </tr>
+                    <tr>
+                        {/if}
+                        {/foreach}
+                    </tr>
+                </table>
+                <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td>
+                            <div id="page">
+                                <style>
+                                    #pagelist li {
+                                        list-style: none;
+                                        float: left;
+                                    }
+
+                                    #pagelist li span {
+                                        border: #CCCCCC 1px solid;
+                                        padding: 2px 5px;
+                                        margin: 2px;
+                                        color: #666666;
+                                        display: block;
+                                    }
+
+                                    #pagelist li a {
+                                        border: #01B0ED 1px solid;
+                                        padding: 2px 5px;
+                                        margin: 2px;
+                                        color: #01B0ED;
+                                        text-decoration: none;
+                                        display: block;
+                                    }
+                                </style>
+                                {$pagelist}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!--//产品-->
+
+    </div>
+</div>
+</div>
+
+</div>
+{include footer.html}

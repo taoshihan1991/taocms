@@ -1,0 +1,180 @@
+{include header.html}
+<link rel="stylesheet" href="{$t_url}styles.css" type="text/css">
+<div class="zbmain">
+
+  {include left.html}
+
+  <div class="zbright">
+
+    <div id="right_main">
+
+   <!--产品-->
+   <div class="right_dh">
+    <div class="right_dh_l"></div>
+    <div class="right_dh_txt">{$pagenav}</div>
+    <div class="right_dh_r"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="right_ny">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="40%" valign="top" style="padding:10px;">
+          <span>
+            <link rel="stylesheet" type="text/css" href="{$public}static/css/pro.css">
+            <div id="featuredmain">
+              <div id="featured">
+                {foreach $gimages as $k=>$img}
+                <table id="image_{$k}" class="image">
+                  <tr>
+                    <td>
+                      <div align="center">
+                        <a href="{$img}" id="foclnk" rel="lightbox[roadtrip]" target="_blank"><img
+                            src="{$img}" alt="{$product.title}" onload="javascript:ResizePic_nycp(this)"
+                            id="focpic" class="IMG{$k}"></a>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+                {/foreach}
+              </div>
+
+              <div id="thumbs">
+                <ul>
+
+                  {foreach $gimages as $k=>$img}
+                  <li class="slideshowItem"><a id="thumb_{$k}" class="thumb-current" href="#image_{$k}"><img
+                        src="{$img}" width="54" height="54" class="IMG{$k}" title="{$product.title}" alt="{$product.title}"><span
+                        class="piclable"></span></a> </li>
+                  {/foreach}
+
+                </ul>
+              </div>
+
+            </div>
+          </span>
+        </td>
+        <td width="60%" valign="top">
+          <div style="padding-top:5px; padding-left:5px; line-height:25px;">
+            <div class="hrstyle"><b>{$langs.protitle}&nbsp;:</b>&nbsp;{$product.title}</div>
+
+            <div class="hrstyle"><b>{$langs.item}&nbsp;:</b>&nbsp;{$product.keywords}</div>
+
+
+
+
+            <div class="hrstyle">
+              <div style=" padding-left:50px;"> <img src="{$public}static/picture/fangda.gif"
+                  style="vertical-align:middle">&nbsp;<a href="{PrintImageURL($product.path, $product.filename,3)}" target="_blank"
+                  rel="lightbox[roadtrip]"><b>{$langs.zoombig}</b></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img
+                  src="{$public}static/picture/back.gif" style="vertical-align:middle">&nbsp;<a
+                  href="javascript:history.back();"><b>{$langs.back}</b></a>
+              </div>
+            </div>
+
+            <div class="hrstyle">
+              <div style=" padding-left:50px;display:none;">
+
+                <a href="javascript:;" title="外球面轴承UCP208-24">←[上一个产品]</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+              </div>
+            </div>
+
+            <div class="hrstyle">
+              <div style="text-align:center; padding-top:5px; padding-bottom:5px;"><img
+                  src="{$public}static/picture/inquire_now_en.gif"
+                  style="cursor:pointer;" class="do-enquiry" pro_id="{$product.pro_id}"><br>
+              </div>
+            </div>
+
+            <!-- AddThis Button BEGIN -->
+            <div style="padding-top:10px; ">
+              <div class="addthis_toolbox addthis_default_style ">
+                <a class="addthis_button_preferred_1"></a>
+                <a class="addthis_button_preferred_2"></a>
+                <a class="addthis_button_preferred_3"></a>
+                <a class="addthis_button_preferred_4"></a>
+                <a class="addthis_button_preferred_5"></a>
+                <a class="addthis_button_preferred_6"></a>
+                <a class="addthis_button_preferred_7"></a>
+                <a class="addthis_button_preferred_8"></a>
+                <a class="addthis_button_preferred_9"></a>
+                <a class="addthis_button_preferred_10"></a>
+                <a class="addthis_button_preferred_11"></a>
+                <a class="addthis_button_preferred_12"></a>
+                <a class="addthis_button_compact"></a>
+                <a class="addthis_counter addthis_bubble_style"></a>
+              </div>
+            </div>
+            <script type="text/javascript" src="{$public}static/js/addthis_widget.js"></script>
+            <!-- AddThis Button ENd -->
+
+          </div>
+        </td>
+      </tr>
+    </table>
+    <br>
+    <table width="700" border="0" align="center" cellpadding="0" cellspacing="0">
+
+      <tr>
+        <td class="line_buttom_hui_xuxian"><strong>{$langs.prodetail}:</strong></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="hangju">&nbsp;
+            {echo html($product.content)}
+          </div>
+
+        </td>
+      </tr>
+
+    </table>
+
+    <br>
+    <table width="700" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td class="line_buttom_hui_xuxian"><strong>{$langs.relatepro} :</strong></td>
+      </tr>
+    </table>
+    <table width="700" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+      </tr>
+      <tr>
+        {foreach $products as $product}
+        <td valign="top">
+          <table width="150" border="0" cellpadding="0" cellspacing="0" style="margin:0 auto 10px auto;">
+            <tr>
+              <td height="150" align="center" bgcolor="#FFFFFF" class="border_hui"> <a href="javascript:;"><img
+                    src="{PrintImageURL($product.path, $product.filename,2)}" style="width:150px;height:150px;" alt="{$product.title}" border="0"></a></td>
+            </tr>
+            <tr>
+              <td align="center"> <a href="{PURL('products?id=' . $product.pro_id)}"><br>{$product.title}</a></td>
+            </tr>
+          </table>
+        </td>
+        
+        {/foreach}
+      </tr>
+    </table>
+  </div>
+  </div>
+   <!--//产品-->
+    
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+  $(function() {
+    //提交询价
+    $(".do-enquiry").click(function(e) {
+      openQuiry("{PURL('ajax/savequiry')}", parseInt($(this).attr("pro_id")), "{$sys_key}", "{echo COOKIE_SAFE}", "{$sys_cookievalue}", "{$sys_code}");
+      e.preventDefault();
+    });
+  });
+  </script>
+{include footer.html}

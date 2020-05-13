@@ -1,0 +1,39 @@
+{include header.html}
+
+<!-- 新闻列表页 start -->
+<div id="news" class="w">
+	<!-- 新闻列表 start -->
+	<div class="xleft">
+		<div class="t">{$langs.news}</div>
+		<div class="list">
+			<ul>
+			{$num = 1}
+			{foreach $news AS $new}
+				<li class="{if is_int($num/2)}bg{/if}"><span class="ntitle"><span class="num">{echo $start + $num}.</span><a href="{if $new.linkurl}{$new.linkurl}" target="_blank"{else}{PURL('news?id=' . $new.n_id)}"{/if}>{$new.title}</a></span><span class="date">{echo DisplayDate($new.created)}</span></li>
+				{$num += 1}
+			{/foreach}
+			</ul>
+		</div>
+
+		<!-- 分页 start -->
+		{$pagelist}
+		<!-- 分页 end -->
+	</div>
+	<!-- 新闻列表 end -->
+
+	<!-- 最新产品 start -->
+	<div class="xright">
+		<div class="divtop"><span class="span_r"><a href="{PURL('products')}">{$langs.more}</a></span><span class=icon></span><a href="{PURL('products')}">{$langs.latestpros}</a></div>
+		<div class="pros">
+		{foreach $newproducts AS $product}
+		<div class="pro">
+			<div class="i_thumb_1"><table><tr><td><a href="{PURL('products?id=' . $product.pro_id)}" title="{$product.title}"><img original="{PrintImageURL($product.path, $product.filename)}"></a></td></tr></table></div>
+		</div>
+		{/foreach}
+		</div>
+	</div>
+	<!-- 最新产品 end -->
+</div>
+<!-- 新闻列表页 end -->
+
+{include footer.html}

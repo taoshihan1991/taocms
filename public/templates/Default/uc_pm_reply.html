@@ -1,0 +1,52 @@
+{include header.html}
+
+<div class="w uc">
+	<!-- 包含用户菜单 -->
+	{include uc_menu.html}
+
+	<div class="r fr">
+		<div class="t">{$submenu}</div>
+		<div class="con">
+			<form id="u_reply_form" onsubmit="return false;">
+			<input type="hidden" name="key" value="{$sys_key}">
+			<table class="tb1">
+			{$data}
+			</table>
+			</form>
+		</div>
+	</div>
+</div>
+<script>
+$(function(){
+	var zzz = 1;
+
+	$("#u_reply_form input.save").click(function(e){
+		var form = $("#u_reply_form");
+		var msg = $("#u_reply_form textarea[name=\"message\"]");
+		if(!$.trim(msg.val())){
+			shake(msg, "shake", 3);
+			msg.val("").focus();
+			return;
+		}
+
+		setCookie('{echo COOKIE_SAFE}', '{$sys_cookievalue}');
+
+		var me = $(this);
+		ajax("{PURL('uc_ajax/savepm')}", form.serialize(), function(data){
+			var pm = msg.val().replace(/\r\n|\r|\n/g, "<br>");
+			msg.val("");
+			zzz += 1;
+			var id = "new888" + zzz;
+			showInfo(langs.u_replyok, '', function(){
+				me.parent().parent().before("<tr id=\"" + id + "\"><td>&nbsp;</td><td>&nbsp;</td><td><div class=pm2>" + pm + "</div></td><td>" + data.i + "</td></tr><tr>");
+
+				shake($("#" + id), "shake2", 6);
+			}, 2, true);
+		}, msg, false, true, "loading2");
+
+		e.preventDefault();
+	});
+});
+</script>
+
+{include footer.html}

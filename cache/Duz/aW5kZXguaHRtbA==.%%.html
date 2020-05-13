@@ -1,0 +1,200 @@
+<?php $this->display('header.html'); ?>
+
+<div class="zbmainsy">
+
+  <?php $this->display('left.html'); ?>
+
+  <div class="zbrightsy">
+
+    <div id="syright_main">
+
+      <!--about start-->
+
+      <div class="syabout">
+
+        <div class="syaboutdh">
+          <div class="syaboutdh_l"></div>
+          <div class="syaboutdh_txt"><span class="syaboutdhzi"><?php echo $this->_tpl_vars['langs']['aboutus']; ?></span><a href="<?php PURL('about'); ?>"><span
+                class="syaboutdhzi1"><?php echo $this->_tpl_vars['langs']['more']; ?>&gt;&gt;</span></a></div>
+          <div class="syaboutdh_r"></div>
+          <div class="clear"></div>
+        </div>
+
+        <div class="syaboutny">
+          <div class="syabhangju">
+
+            <span style="float:right;clear:left; margin-left:10px; margin-bottom:2px">
+
+              <div id="top_tu">
+
+                <script language="javascript" type="text/javascript">
+                  var focus_width = 200
+                  var focus_height = 170
+                  var text_height = 1
+                  var swf_height = focus_height + text_height
+                  var pics = '';
+                  var links = '';
+                  var texts = '';
+
+                  function ati(url, img, title) {
+                    if (pics != '') {
+                      pics = "|" + pics;
+                      links = "|" + links;
+                      texts = "|" + texts;
+                    }
+                    pics = escape(img) + pics;
+                    links = escape(url) + links;
+                    texts = title + texts;
+                  }
+
+
+                  ati('', '<?php echo $this->_tpl_vars['public']; ?>static/picture/na02.jpg', '');
+
+                  ati('#', '<?php echo $this->_tpl_vars['public']; ?>static/picture/sa02.jpg', '');
+
+                  ati('#', '<?php echo $this->_tpl_vars['public']; ?>static/picture/sb02.jpg', '');
+
+                  ati('#', '<?php echo $this->_tpl_vars['public']; ?>static/picture/uc02.jpg', '');
+
+
+                  var zwebs = '<object classid=\"clsid:d27cdb6e-ae6d-11cf-96b8-444553540000\" codebase=\"http:\/\/fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width=\"' + focus_width + '\" height=\"' + swf_height + '\">';
+                  zwebs += '<param name="movie" value="<?php echo $this->_tpl_vars['public']; ?>static\/flash\/flash_img.swf"><param name="quality" value="high"><param name="bgcolor" value="#ffffff">';
+                  zwebs += '<param name=\"menu\" value=\"false\"><param name=wmode value=\"opaque\">';
+                  zwebs += '<param name=\"FlashVars\" value=\"pics=' + pics + '&links=' + links + '&texts=' + texts + '&borderwidth=' + focus_width + '&borderheight=' + focus_height + '&textheight=' + text_height + '\">';
+                  zwebs += '<embed src=\"<?php echo $this->_tpl_vars['public']; ?>static\/flash\/flash_img.swf\" wmode=\"opaque\" FlashVars=\"pics=' + pics + '&links=' + links + '&texts=' + texts + '&borderwidth=' + focus_width + '&borderheight=' + focus_height + '&textheight=' + text_height + '\" menu=\"false\" bgcolor=\"#ffffff\" quality=\"high\" width=\"' + focus_width + '\" height=\"' + swf_height + '\" allowScriptAccess=\"samedomain\" type=\"application\/x-shockwave-flash\" pluginspage=\"http:\/\/www.macromedia.com\/go\/getflashplayer\" \/>';
+                  zwebs += '<\/object>';
+                  document.write(zwebs);
+//-->
+                </script>
+
+              </div>
+            </span>
+
+            <?php echo $this->_tpl_vars['about']['content']; ?>
+          </div>
+        </div>
+      </div>
+
+      <!--about end-->
+      <!--product start-->
+
+      <div class="sypro">
+
+        <div class="syprodh">
+          <div class="syprodh_l"></div>
+          <div class="syprodh_txt"><span class="syprodhzi"><?php echo $this->_tpl_vars['langs']['reproducts']; ?></span><a href="<?php PURL('products?re=1'); ?>"><span
+                class="syprodhzi1"><?php echo $this->_tpl_vars['langs']['more']; ?>&gt;&gt;</span></a></div>
+          <div class="syprodh_r"></div>
+          <div class="clear"></div>
+        </div>
+
+        <table border="0" cellpadding="0" cellspacing="0" class="syprony">
+          <tr>
+            <?php foreach($this->_tpl_vars['recommends'] as $this->_tpl_vars['product']){; ?>
+            <td valign="top">
+              <div align="center">
+                <table width="150" border="0" cellpadding="0" cellspacing="0" class="syprony1">
+                  <tr>
+                    <td height="150" align="center" class="sypro_border_hui"
+                      onmouseover="this.className='sypro_border_hui1'" onmouseout="this.className='sypro_border_hui'"><a
+                        href="<?php PURL('products?id=' . $this->_tpl_vars['product']['pro_id']); ?>">
+                        <img src="<?php PrintImageURL($this->_tpl_vars['product']['path'], $this->_tpl_vars['product']['filename'],2); ?>" width="100px" height="100px"
+                          onload="javascript:ResizePic(this)" title="<?php echo $this->_tpl_vars['product']['title']; ?>" border="0"></a></td>
+                  </tr>
+                  <tr>
+                    <td class="syprony_title"><a
+                        href="<?php PURL('products?id=' . $this->_tpl_vars['product']['pro_id']); ?>"><?php echo $this->_tpl_vars['product']['keywords']; ?><br><?php echo $this->_tpl_vars['product']['title']; ?></a></td>
+                  </tr>
+                </table>
+              </div>
+            </td>
+            <?php }; ?>
+          </tr>
+          <tr>
+          </tr>
+        </table>
+        <!--产品列表形式-->
+
+      </div>
+
+      <!--product end-->
+      <!--product gd start-->
+
+      <div class="sypro_g_">
+        <div class="sypro_g_dh">
+          <div class="sypro_g_dh_l"></div>
+          <div class="sypro_g_dh_txt"><span class="sypro_g_dhzi"><?php echo $this->_tpl_vars['langs']['latestpros']; ?></span><a href="<?php PURL('products'); ?>"><span
+                class="sypro_g_dhzi1"><?php echo $this->_tpl_vars['langs']['more']; ?>&gt;&gt;</span></a></div>
+          <div class="sypro_g_dh_r"></div>
+          <div class="clear"></div>
+        </div>
+
+        <table border="0" cellpadding="0" cellspacing="0" style="width:100%" class="sypro_g_ny">
+          <tr>
+            <td>
+
+
+
+              <div class="sypro_g_n">
+                <div class="sypro_g_n1" id="demo">
+                  <div id="indemo">
+                    <div id="demo1">
+                      <?php foreach($this->_tpl_vars['newproducts'] as $this->_tpl_vars['product']){; ?>
+                      <div class="sypro_g_tu">
+                        <table border="0" cellpadding="0" cellspacing="0" class="sypro_g_ny1"
+                          style="margin-bottom:10px;">
+                          <tr>
+                            <td style="WIdTH: 150px; HEIGHT: 150px" class="sypro_g_tu_border_hui"
+                              onmouseover="this.className='sypro_g_tu_border_hui1'"
+                              onmouseout="this.className='sypro_g_tu_border_hui'">
+                              <a href="<?php PURL('products?id=' . $this->_tpl_vars['product']['pro_id']); ?>"> <img src="<?php PrintImageURL($this->_tpl_vars['product']['path'], $this->_tpl_vars['product']['filename'],2); ?>" width="100px"
+                                  height="100px" onload="javascript:ResizePic1(this)" title="<?php echo $this->_tpl_vars['product']['keywords']; ?> <?php echo $this->_tpl_vars['product']['title']; ?>"
+                                  border="0"></a>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="sypro_g_title"><a href="<?php PURL('products?id=' . $this->_tpl_vars['product']['pro_id']); ?>"><br><?php echo $this->_tpl_vars['product']['keywords']; ?> <?php echo $this->_tpl_vars['product']['title']; ?></a>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                      <?php }; ?>
+
+                    </div>
+                    <div id="demo2"></div>
+                  </div>
+                </div>
+                <script>
+                  var speed = 15; //数字越大速度越慢
+                  var tab = document.getElementById("demo");
+                  var tab1 = document.getElementById("demo1");
+                  var tab2 = document.getElementById("demo2");
+                  tab2.innerHTML = tab1.innerHTML;
+                  function Marquee() {
+                    if (tab2.offsetWidth - tab.scrollLeft <= 0)
+                      tab.scrollLeft -= tab1.offsetWidth
+                    else {
+                      tab.scrollLeft++;
+                    }
+                  }
+                  var MyMar = setInterval(Marquee, speed);
+                  tab.onmouseover = function () {
+                    clearInterval(MyMar)
+                  };
+                  tab.onmouseout = function () {
+                    MyMar = setInterval(Marquee, speed)
+                  };
+                </script>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <!--product gd end-->
+    </div>
+  </div>
+</div>
+
+</div>
+<?php $this->display('footer.html'); ?>

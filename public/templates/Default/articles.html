@@ -1,0 +1,38 @@
+{include header.html}
+
+<!-- 文章列表页 start -->
+<div id="news" class="w">
+	<!-- 文章列表 start -->
+	<div class="xleft">
+		<div class="t">{if $catname}{$catname}{else}{$langs.u_articles}{$langs.list}{/if}</div>
+		<div class="list">
+			<ul>
+			{$num = 1}
+			{foreach $articles AS $article}
+				<li class="{if is_int($num/2)}bg{/if}"><span class="ntitle"><span class="num">{echo $start + $num}.</span><a href="{if $article.linkurl}{$article.linkurl}" target="_blank"{else}{PURL('articles')}?id={$article.a_id}"{/if}>{$article.title}</a></span><span class="date">{echo DisplayDate($article.created)}</span></li>
+				{$num += 1}
+			{/foreach}
+			</ul>
+		</div>
+		<!-- 分页 start -->
+		{$pagelist}
+		<!-- 分页 end -->
+	</div>
+	<!-- 文章列表 end -->
+
+	<!-- 推荐文章 start -->
+	<div class="xright">
+		<div class="divtop"><span class="span_r"><a href="{PURL('articles')}?re">{$langs.more}</a></span><span class=icon></span><a href="{PURL('articles')}?re">{$langs.rearticles}</a></div>
+		<div class="pros">
+			<ul>
+			{foreach $re_articles AS $article}
+			<li><a href="{if $article.linkurl}{$article.linkurl}" target="_blank"{else}{PURL('articles')}?id={$article.a_id}"{/if}>{$article.title}</a> <span class=grey>({echo DisplayDate($article.created)})</span></li>
+			{/foreach}
+			</ul>
+		</div>
+	</div>
+	<!-- 推荐文章 end -->
+</div>
+<!-- 文章列表页 end -->
+
+{include footer.html}

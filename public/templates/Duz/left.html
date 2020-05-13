@@ -1,0 +1,67 @@
+<div valign="top" class="zbleftsy">
+  <div class="left_class">
+    <div class="left_classdh">
+      <div class="left_classdh_l"></div>
+      <div class="left_classdh_txt">{$langs.product_cate}</div>
+      <div class="left_classdh_r"></div>
+      <div class="clear"></div>
+    </div>
+    <div id="left_classny">
+      <?php 
+$pcategories=$this->_tpl_vars['pcategories'];
+foreach($pcategories as $pCate){
+?>
+      <div id="cpdl">
+        <a href="<?php echo PURL('products?cat=' . $pCate['cat_id']);?>" title="<?php echo $pCate['name'];?>"><img
+            src="{$public}static/picture/cpdl_tb1.gif" alt="" border="0"
+            style=" margin-right:5px;"><?php echo $pCate['name'];?><br></a>
+      </div>
+      <?php if(!empty($pCate['child'])){ foreach($pCate['child'] as $sCate){ ?>
+      <div id="cpxl">
+        <a href="<?php echo PURL('products?cat=' . $sCate['cat_id']);?>" title="<?php echo $sCate['name'];?>"><img
+            src="{$public}static/picture/cpxl_tb1.gif" alt="" border="0"
+            style=" margin-right:5px;"><?php echo $sCate['name'];?><br></a>
+      </div>
+      <?}}}?>
+    </div>
+  </div>
+
+
+
+  <div class="left_contact">
+    <div class="left_contactdh">
+      <div class="left_contactdh_l"></div>
+      <div class="left_contactdh_txt">{$langs.contactus}</div>
+      <div class="left_contactdh_r"></div>
+      <div class="clear"></div>
+    </div>
+    <div id="left_contactny">
+      <div id="left_contactny_tu">
+
+        <a href="#"><img src="{$public}static/picture/tugg3image.jpg" width="198" height="80" border="0"></a>
+
+      </div>
+      <p>
+        {$contact.content}
+
+        <a href="mailto:yybearing@vip.163.com">
+          <img src="{$public}static/picture/msn.gif" alt="MSN: " border="0"
+            style="margin-left:3px;">
+        </a>
+
+        <a href="mailto:yybearing@vip.163.com">
+          <img src="{$public}static/picture/skype.gif" alt="Skype: " border="0"
+            style="margin-left:3px;"></a>
+
+        <a href="mailto:yybearing@vip.163.com" target="_blank">
+          <img border="0" src="{$public}static/picture/yahoo.gif" style="margin-left:3px;"></a>
+
+        <a target="_blank" href="mailto:yybearing@vip.163.com"><img border="0" src="{$public}static/picture/qq.gif" alt="QQ: 497938422"
+            title="Call us" style="margin-left:3px;"></a>
+
+      </p>
+    </div>
+  </div>
+
+</div>
+<div class="syjj">&nbsp;</div>

@@ -1,0 +1,101 @@
+{include header.html}
+<script type="text/javascript" src="{$public}js/fullavatar/swfobject.js"></script>
+<script type="text/javascript" src="{$public}js/fullavatar/fullAvatarEditor.js"></script>
+
+<div class="w uc">
+	<!-- 包含用户菜单 -->
+	{include uc_menu.html}
+
+	<div class="r fr">
+		<div class="t">{$submenu}</div>
+		<div class="con">
+			<div style="">
+				<div id="avatar_upload">{$langsforme.warning}</div>
+				<div style="text-align:center;display:none;" id="avatar_tools">
+					<input type="submit" value="{$langs.save}" class="save" id="avatar_save">
+					<i class="btn_nav"></i>
+					<input type="submit" value="{$langs.cancel}" class="cancel" id="avatar_cancel">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+$(function(){
+	swfobject.addDomLoadEvent(function () {
+		var swf = new fullAvatarEditor("avatar_upload", 420, 760, {
+				id: 'swf',
+				upload_url: '{PURL('uc_ajax/avatar')}?key={$sys_key}',
+				src_upload:0,
+				quality: 88,
+				src_size_over_limit: '{$langsforme.over_limit}',
+				src_size_over_limit_font: 'Microsoft Yahei',
+				src_size_over_limit_font_size:12,
+				src_box_width: 360,
+				src_box_height: 360,
+				src_box_border_width: 3,
+				tab_visible: false,
+				browse_button: '{$langsforme.browse_button}',
+				browse_button_font: 'Microsoft Yahei',
+				browse_button_color: '#FF9900',
+				browse_tip: '{$langsforme.browse_tip}',
+				browse_tip_font_size: 12,
+				browse_tip_font: 'Microsoft Yahei',
+				browse_box_align: 'left',
+				button_visible: false,
+				avatar_sizes: '120*120|48*48',
+				avatar_sizes_desc: "{$langsforme.avatar_sizes_desc}",
+				avatar_intro: '{$langsforme.avatar_intro}',
+				avatar_intro_font: 'Microsoft Yahei',
+				avatar_intro_font_size: 12,
+				avatar_tools_font: 'Microsoft Yahei',
+				avatar_tools_font_size:12,
+				tooltip_zoomIn: "{$langsforme.tooltip_zoomIn}",
+				tooltip_zoomOut: '{$langsforme.tooltip_zoomOut}',
+				tooltip_zoomNone: '{$langsforme.tooltip_zoomNone}',
+				tooltip_rotateCW: '{$langsforme.tooltip_rotateCW}',
+				tooltip_rotateCCW: '{$langsforme.tooltip_rotateCCW}',
+				tooltip_reset: '{$langsforme.tooltip_reset}',
+				tooltip_font: 'Microsoft Yahei',
+				tooltip_font_size:12,
+				tooltip_color:'#C50006'
+			}, function (data) {
+				switch(data.code){
+					case 2:
+						if (data.type == 0) {
+							$('#avatar_tools').show();
+						} else {
+							$('#avatar_tools').hide();
+						}
+					break;
+					case 5 : 
+						if(data.type == 0){
+							if(data.content.ok){
+								$('.user_avatar1').attr('src', data.content.msg);
+								showInfo('{$langsforme.saved}', '', function(){ $("#avatar_cancel").click();}, 2, true);
+							}else{
+								showInfo(data.content.msg);
+							}
+						}else{
+							showInfo(langs.er_avatar);
+						}
+					break;
+				}
+			}
+		);
+
+		$("#avatar_save").click(function(e){
+			setCookie("{echo COOKIE_SAFE}", "{$sys_cookievalue}");
+			swf.call("upload");
+			e.preventDefault();
+		});
+		$("#avatar_cancel").click(function(e){
+			$('#avatar_tools').hide();
+			swf.call("changepanel", "upload");
+			e.preventDefault();
+		});
+	});
+});
+</script>
+
+{include footer.html}

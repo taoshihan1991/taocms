@@ -1,0 +1,99 @@
+{include header.html}
+
+<div id="article" class="w">
+	<div class="xleft">
+		<div class="t"><b class=grey>{$langs.title}:</b><div>{$article.title}</div></div>
+		<table class="tb">
+		<tr>
+		<td class="td1">
+			<a href="" class="pm" toname="{$article.username}" toid="{$article.userid}"><img src="{PrintAvatar($article.userid)}" class="user_avatar" title="{$article.username}"></a>
+		</td>
+		<td class="td2">
+			<div class="s">
+				{$langs.editor}: <a href="" class="pm" toname="{$article.username}" toid="{$article.userid}" title="{$langs.u_sendpm}">{$article.username}&nbsp; <img src="{$t_url}images/pm.png"></a><u></u>
+				{$langs.date}: {echo DisplayDate($article.created)}<u></u>
+				{$langs.clicks}: {$article.clicks}<u></u>
+				<a href="#c">{$langs.comms}: {$comms}</a>
+				<div class="fontZoom">
+					<a href="" class="icons font_down" title="{$langs.zoomout}"></a>
+					<a href="" class="icons font_up" title="{$langs.zoomin}"></a>
+				</div>
+			</div>
+			<div class="content1">{echo html($article.content)}</div>
+		</td>
+		</tr>
+		</table>
+
+		<a name="c"></a>
+		<div class="t ctop"><b class=grey>{$langs.title}:</b><div>{$article.title}</div><a href="" class="link-btn link-bg3 submitcomm" for_id="{$article.a_id}" type="0">{$langs.submitc} <font class=grey>({$comms})</font></a></div>
+
+		<table class="tb c" id="commentstb">
+		{$num = 1}
+		{foreach $comments AS $comm}
+			{if $comm.userid}
+				{$link1 = '<a href="" class="pm" toname="' . $comm.username . '" toid="' . $comm.userid . '" title="' . $langs.u_sendpm . '">'}
+				{$link2 = '</a>'}
+				{$username = $comm.username . '&nbsp; <img src="' . $t_url . 'images/pm2.png">'}
+			{else}
+				{$link1 = ''}
+				{$link2 = ''}
+				{$username = '[ ' . $langs.guest . ' ] ' . $comm.username}
+			{/if}
+			<tr class="{if is_int($num/2)}c2{/if}">
+			<td class="td1">{$link1}<img src="{PrintAvatar($comm.userid)}" class="user_avatar" title="{$comm.username}">{$link2}</td>
+			<td class="td2">
+				<div class="s">
+					{$link1}{$username}{$link2}
+					<span>{echo DisplayDate($comm.created, '', 1)}&nbsp;&nbsp; #{echo $start + $num}</span>
+				</div>
+				<div class="comm">{echo nl2br($comm.content)}</div>
+			</td>
+			</tr>
+			{$num += 1}
+		{/foreach}
+		</table>
+		{$pagelist}
+	</div>
+
+	<div class="xcontainer">
+		<!-- 最新产品 start -->
+		<div class="xright">
+			<div class="divtop"><span class="span_r"><a href="{PURL('products')}">{$langs.more}</a></span><span class=icon></span><a href="{PURL('products')}">{$langs.latestpros}</a></div>
+			<div class="pros">
+			{foreach $products AS $product}
+			<div class="pro">
+				<div class="i_thumb_1"><table><tr><td><a href="{PURL('products?id=' . $product.pro_id)}" title="{$product.title}"><img original="{PrintImageURL($product.path, $product.filename)}"></a></td></tr></table></div>
+			</div>
+			{/foreach}
+			</div>
+		</div>
+		<!-- 最新产品 end -->
+
+		<!-- 推荐文章 start -->
+		<div class="xright">
+			<div class="divtop"><span class="span_r"><a href="{PURL('articles')}?re">{$langs.more}</a></span><span class=icon></span><a href="{PURL('articles')}?re">{$langs.rearticles}</a></div>
+			<div class="pros">
+				<ul>
+				{foreach $articles AS $article}
+				<li><a href="{if $article.linkurl}{$article.linkurl}" target="_blank"{else}{PURL('articles?id=' . $article.a_id)}"{/if}>{$article.title}</a> <span class=grey>({echo DisplayDate($article.created)})</span></li>
+				{/foreach}
+				</ul>
+			</div>
+		</div>
+		<!-- 推荐文章 end -->
+	</div>
+</div>
+
+<script>
+$(function() {
+	//发表评论
+	$(".submitcomm").click(function(e) {
+		openCOMM("{PURL('ajax/savecomm')}", parseInt($(this).attr("for_id")), $(this).attr("type"), "{$sys_key}", "{echo COOKIE_SAFE}", "{$sys_cookievalue}", "{$sys_code}");
+		e.preventDefault();
+	});
+
+	$(".fontZoom").fontZoom({ obj:".content1", max:36, min:10}); //字体放大
+});
+</script>
+
+{include footer.html}

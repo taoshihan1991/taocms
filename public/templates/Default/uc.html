@@ -1,0 +1,52 @@
+{include header.html}
+
+<div class="w uc">
+	<!-- 包含用户菜单 -->
+	{include uc_menu.html}
+
+	<div class="r fr">
+		<div class="t">{$submenu}</div>
+		<div class="con">
+			<table class="tb1">
+			<tr>
+				<td>{$langs.username}:<i>{$sys_user.username} (ID: {$sys_user.userid})</i></td>
+				<td>{$langs.usergroup}:<i>{$sys_user.groupname}</i></td>
+			</tr>
+			<tr>
+				<td>{$langs.nickname}:<i>{$sys_user.nickname}</i></td>
+				<td>{$langs.email}:<i>{$sys_user.email}</i></td>
+			</tr>
+			<tr>
+				<td>{$langs.lastlogin}:<i>{echo DisplayDate($sys_user.lastdate, '', 1)} (IP: {$sys_user.lastip})</i></td>
+				<td>{$langs.registerdate}:<i>{echo DisplayDate($sys_user.joindate)} (IP: {$sys_user.joinip})</i></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+				{$langs.logins}:<i>{$sys_user.loginnum}</i><u></u>{$langs.enquiries}:<i>{$sys_user.q_num}</i>
+				<u></u>{$langs.u_articles}:<i>{$sys_user.a_num}</i><u></u>{$langs.u_acomms}:<i>{$sys_user.ac_num}</i>
+				<u></u>{$langs.u_products}:<i>{$sys_user.p_num}</i><u></u>{$langs.u_pcomms}:<i>{$sys_user.pc_num}</i>
+				</td>
+			</tr>
+			</table>
+		</div>
+		<BR>
+		<div class="t t2"><h3><font class=greyb>{$langs.p_myp}</font></h3></div>
+		<div class="con con2">
+			<li class="yes"><b></b>{$langs.p_edit}</li>
+			<li class="{$s_pm} x"><b></b>{$langs.p_pm}<u></u>{$langs.p_days}:<input value="{$s_pmdays}" disabled>{$langs.days}</li>
+			<li class="{$s_enquiry}"><b></b>{$langs.p_enquiry}</li>
+			<li class="{$s_del_e}"><b></b>{$langs.p_dele}</li>
+			<li class="{$s_comment}"><b></b>{$langs.p_comm}</li>
+			<li class="{$s_cRightnow}"><b></b>{$langs.p_cnow}</li>
+			<li class="{$s_del_c}"><b></b>{$langs.p_delc}</li>
+			<li class="{$s_articles} x"><b></b>{$langs.p_article}<u></u>{$langs.p_anum}:<input value="{$s_anum}" disabled>{$langs.pieces}</li>
+			<li class="{$s_aRightnow}"><b></b>{$langs.p_anow}</li>
+			<li class="{$s_del_a}"><b></b>{$langs.p_dela}</li>
+			<li class="{$s_products} x"><b></b>{$langs.p_product}<u></u>{$langs.p_pnum}:<input value="{$s_pnum}" disabled>{$langs.items}</li>
+			<li class="{$s_pRightnow}"><b></b>{$langs.p_pnow}</li>
+			<li class="{$s_del_p}"><b></b>{$langs.p_delp}</li>
+		</div>
+	</div>
+</div>
+
+{include footer.html}

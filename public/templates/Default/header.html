@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>{$title}</title>
+<meta name="description" content="{$description}">
+<meta name="Keywords" content="{$keywords}">
+<link rel="shortcut icon" href="{$t_url}images/favicon.ico" type="image/x-icon"> 
+<link rel="stylesheet" href="{$t_url}styles.css" type="text/css">
+<link rel="stylesheet" href="{$public}js/easyDialog/easydialog.css" type="text/css">
+<script type="text/javascript">
+var this_uri = "{$this_uri}";
+var siteConfig={
+	siteurl: "{$baseurl}",
+	t_url: "{$t_url}",
+	sitename: "{$sitename}"
+};
+var user_rights = {$sys_user.rights}; //全局js用户权限对象, 用于某些操作的初步权限验证, 勿删!
+</script>
+<script type="text/javascript" src="{$public}languages/{$js_lang}.js"></script><!-- js语言缓存在前加载 -->
+<script type="text/javascript" src="{$public}js/jquery-1.2.6.min.js"></script>
+<script type="text/javascript" src="{$t_url}units.js"></script>
+</head>
+<body>
+<!-- easyDialog需要在body内加载 -->
+<script src="{$public}js/easyDialog/easydialog.min.js"></script>
+
+<!-- 顶部导航栏 start -->
+<div id="top">
+	<div class="w">
+		<div class="langs fl">
+			<dl class="first"><a href="{PURL()}" title="{$langs.home}"><dt class="home"></dt></a></dl>
+			{if IS_CHINESE}
+				<dl><dt class="cn_on" title="{$langs.chinese}"></dt></dl>
+				<dl class="last"><dt class="en" title="{$langs.change_lan}"></dt></dl>
+			{else}
+				<dl><dt class="cn" title="{$langs.change_lan}"></dt></dl>
+				<dl class="last"><dt class="en_on" title="{$langs.english}"></dt></dl>
+			{/if}
+		</div>
+		<div class="links fr">
+			<font class="{if !$sys_user.userid}hide{/if}" id="user_links">
+				<dl class="first msg">
+					{$langs.welcome}！<a href="{PURL('uc')}"><font class="gr2" id="u_name">{$sys_user.nickname}</font></a>
+					<a href="{PURL('uc_pm')}"><span class="u_pms{if $sys_user.pms} new{/if}" title="{$sys_user.pms} {$langs.u_pms}">{$sys_user.pms}</span></a>
+				</dl>
+				<dl class="menu">
+					<dt><a href="{PURL('uc')}">{$langs.uc}</a><b></b></dt>
+					<dd>
+						<li><a href="{PURL('uc_edit')}">{$langs.u_edit}</a></li>
+						<li><a href="{PURL('uc_avatar')}">{$langs.u_uploadav}</a></li>
+						<li><a href="{PURL('uc_pm')}" title="{$sys_user.pms} {$langs.u_pms}">{$langs.u_mypm} <span class="u_pms{if $sys_user.pms} new{/if}" >{$sys_user.pms}</span></a></li>
+						<li><a href="{PURL('uc_enquiry')}">{$langs.u_myeq}{if $sys_user.q_num} <i>({$sys_user.q_num})</i>{/if}</a></li>
+						<li><a href="{PURL('uc_article')}">{$langs.u_myart}{if $sys_user.a_num} <i>({$sys_user.a_num})</i>{/if}</a></li>
+						<li><a href="{PURL('uc_acomment')}">{$langs.u_acomm}{if $sys_user.ac_num} <i>({$sys_user.ac_num})</i>{/if}</a></li>
+						<li><a href="{PURL('uc_product')}">{$langs.u_mypro}{if $sys_user.p_num} <i>({$sys_user.p_num})</i>{/if}</a></li>
+						<li><a href="{PURL('uc_pcomment')}">{$langs.u_pcomm}{if $sys_user.pc_num} <i>({$sys_user.pc_num})</i>{/if}</a></li>
+					</dd>
+				</dl>
+				<dl><a href="" class="u_logout"><font class=red>{$langs.logout}</font></a></dl>
+			</font>
+			<font class="{if $sys_user.userid}hide{/if}" id="guest_links">
+				<dl class="first"><a href="{PURL('register')}" id="u_register">{$langs.joinnow}</a></dl>
+				<dl><a href="" id="u_signin" class="gr2">{$langs.signin}</a></dl>
+			</font>
+			<dl class="add"><a href="javascript:addToFavorite();"><b></b>{$langs.addfavorite}</a></dl>
+			<dl class="menu">
+				<dt>{$langs.services}<b></b></dt>
+				<dd>
+					<li><a href="{PURL('about')}">{$langs.aboutus}</a></li>
+					<li><a href="{PURL('about?id=2')}">{$langs.contactus}</a></li>
+					<li><a href="{PURL('about?id=14')}">{$langs.culture}</a></li>
+					<li><a href="{PURL('about?id=15')}">{$langs.organization}</a></li>
+				</dd>
+			</dl>
+			<dl class="menu">
+				<dt>{$langs.companys}<b></b></dt>
+				<dd>
+					<li><a href="{PURL('about?id=11')}">{$langs.company1}</a></li>
+					<li><a href="{PURL('about?id=12')}">{$langs.company2}</a></li>
+					<li><a href="{PURL('about?id=13')}">{$langs.company3}</a></li>
+				</dd>
+			</dl>
+			<dl class="end"></dl>
+		</div>
+	</div>
+</div>
+<!-- 顶部导航栏 end -->
+
+<!-- Logo栏 start -->
+<div id="header" class="w">
+	<div id="logo"><a href="{PURL()}" hidefocus="true" title="{$sitename}"><img src="{$t_url}images/logo.png" width="260" height="80" alt="{$sitename}"></a></div>
+	<!-- 顶部随机图片广告 共六个 可自行修改或删除 start -->
+	{$topadvs = array(
+			1=> 'http://www.weensoft.cn', 
+			2=> url('products'),
+			3=> url('about'),
+			4=> 'http://www.weensoft.cn',
+			5=> url('news'),
+			6=> url()
+	)}
+	{$rand = rand(1, 6)}
+	<div id="top_adv"><a href="{echo $topadvs[$rand]}" target="_blank"><img src="{$t_url}images/top_adv{$rand}.jpg"></a></div>
+	<!-- 顶部随机图片广告 共六个 可自行修改或删除 end -->
+</div>
+<!-- Logo栏 end -->
+
+<!-- 菜单栏 start -->
+<div class="w topmenu">
+	<div id="menu">
+		<dl><dt><a href="{PURL()}" hidefocus="true">{$langs.home}</a></dt></dl>
+		<dl class="menu">
+			<dt><a href="{PURL('products')}" hidefocus="true">{$langs.products}</a><b></b></dt>
+			<dd class="cats">
+				{$pcategories}
+				<li class="last"></li>
+			</dd>
+		</dl>
+		<dl class="menu">
+			<dt><a href="{PURL('articles')}" hidefocus="true">{$langs.articles}</a><b></b></dt>
+			<dd class="cats">
+				{$acategories}
+				<li class="last"></li>
+			</dd>
+		</dl>
+		<dl><dt><a href="{PURL('news')}" hidefocus="true">{$langs.news}</a></dt></dl>
+		<dl class="menu">
+			<dt><a href="{PURL('about')}" hidefocus="true">{$langs.aboutus}</a><b></b></dt>
+			<dd class="normal">
+				<li><a href="{PURL('about?id=14')}">{$langs.culture}</a></li>
+				<li><a href="{PURL('about?id=15')}">{$langs.organization}</a></li>
+				<li><a href="{PURL('about?id=11')}">{$langs.company1}</a></li>
+				<li><a href="{PURL('about?id=12')}">{$langs.company2}</a></li>
+				<li><a href="{PURL('about?id=13')}">{$langs.company3}</a></li>
+			</dd>
+		</dl>
+		<dl><dt><a href="{PURL('about?id=2')}" hidefocus="true">{$langs.contactus}</a></dt></dl>
+	</div>
+	<div class="web_s">
+		<form action="{PURL('search')}" method="post">
+			<input type="text" name="s" class="key" value="{$keyword}"><input type="submit" class="btn" hidefocus="true" value="">
+		</form>
+	</div>
+</div>
+<!-- 菜单栏 end -->
+
+<!-- 当前位置导航栏 start -->
+{if $pagenav}
+<div class="w">
+	<div class="nav">
+		<div id="pagenav"><span class=navicon></span>{$langs.yourarehere}&nbsp;&nbsp;{$pagenav}</div>
+	</div>
+</div>
+{/if}
+<!-- 当前位置导航栏 end -->

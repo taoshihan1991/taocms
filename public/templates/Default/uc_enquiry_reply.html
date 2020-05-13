@@ -1,0 +1,108 @@
+{include header.html}
+
+<div class="w uc">
+	<!-- 包含用户菜单 -->
+	{include uc_menu.html}
+
+	<div class="r fr">
+		<div class="t">{$submenu}</div>
+		<div class="con">
+			<table class="tb2">
+			<tr>
+				<th>{$langs.eqproduct}</th>
+				<th>{$langs.protitle}</th>
+				<th>{$langs.status}</th>
+				<th>{$langs.price}</th>
+				<th>{$langs.editor}</th>
+				<th>{$langs.date}</th>
+			</tr>
+			{if !$product}
+			<tr><td colspan="6"><font class=red>{$langs.er_noep}{$langs.er_replybut}</font></td></tr>
+			{else}
+			<tr>
+				<td><a href="{PURL('products?id=' . $product.pro_id)}" title="{$product.title}" target="_blank" class="bn"><img src="{PrintImageURL($product.path, $product.filename)}" class="ZoomImg"></a></td>
+				<td class="al"><a href="{PURL('products?id=' . $product.pro_id)}" title="{$product.title}" target="_blank"{if $product.is_show<>1} class="red"{/if}>{echo ShortTitle($product.title, 36)}</a></td>
+				<td>{if $product.is_show==1}<font class=green>{$langs.onsale}</font>{else}<font class=red>{$langs.offline}</font>{/if}</td>
+				<td>{$product.price}</td>
+				<td><img src="{PrintAvatar($product.userid)}" class="user_avatar wh30">{$product.username}&nbsp; <a href="#" toid="{$product.userid}" toname="{$product.username}" class="pm"><img src="{$t_url}images/pm2.png" title="{$langs.u_sendpm}"></a></td>
+				<td>{echo DisplayDate($product.date)}</td>
+			</tr>
+			{/if}
+			</table>
+
+			<form id="u_reply_form" onsubmit="return false;">
+			<input type="hidden" name="key" value="{$sys_key}">
+			<table class="tb1">
+			<tr><td colspan='5' class='tdt greyb'><div>{$langs.enquiries}:<i>{echo ShortTitle($eq.title, 108)}</i></div></td></tr>
+			<tr>
+				<th>{$langs.u_sendtime}</th>
+				<th><img src="{PrintAvatar($eq.userid)}" class="user_avatar wh30">{$eq.username} <font class=greyb>( {$langs.u_me} )</font></th>
+				<th>{$langs.replycontent}</th>
+				<th>{$langs.replier}</th>
+			</tr>
+			<tr>
+				<td>{echo DisplayDate($eq.created, '', 1)}</td>
+				<td><div class=pm1>{echo nl2br($eq.content)}</div></td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			</tr>
+			{foreach $replies AS $reply}
+				{if $reply.status}
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td><div class="grey" style="margin-bottom:4px;">{echo DisplayDate($reply.created, '', 1)}</div><div class=pm2>{echo nl2br($reply.content)}</div></td>
+					<td><img src="{PrintAvatar($reply.userid)}" class="user_avatar wh30">{$reply.username} <a href="#" toid="{$reply.userid}" toname="{$reply.username}" class="pm"><img src="{$t_url}images/pm2.png" title="{$langs.u_sendpm}"></a></td>
+				</tr>
+				{else}
+				<tr>
+					<td>{echo DisplayDate($reply.created, '', 1)}</td>
+					<td><div class=pm1>{echo nl2br($reply.content)}</div></td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr>
+				{/if}
+			{/foreach}
+			<tr>
+				<td>&nbsp;</td>
+				<td><input type="hidden" name="e_id" value="{$eq.e_id}"><textarea name="content" style="height:80px;width:220px;margin-bottom:8px;"></textarea><br><input type="submit" value="{$langs.u_enqmore}" class="save"></td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			</tr>
+			</table>
+			</form>
+		</div>
+	</div>
+</div>
+<script>
+$(function(){
+	var zzz = 1;
+	$("#u_reply_form input.save").click(function(e){
+		var form = $("#u_reply_form");
+		var content = $("#u_reply_form textarea[name=\"content\"]");
+		if(!$.trim(content.val())){
+			shake(content, "shake", 3);
+			content.val("").focus();
+			return;
+		}
+
+		setCookie('{echo COOKIE_SAFE}', '{$sys_cookievalue}');
+		var me = $(this);
+		ajax("{PURL('uc_ajax/savequiry')}", form.serialize(), function(data){
+			var eq = content.val().replace(/\r\n|\r|\n/g, "<br>");
+			content.val("");
+			zzz += 1;
+			var id = "new888" + zzz;
+			showInfo(langs.i_quiryok, '', function(){
+				me.parent().parent().before("<tr id='" + id + "'><td>" + data.i + "</td><td><div class=pm1>" + eq + "</div></td><td>&nbsp;</td><td>&nbsp;</td></tr><tr>");
+
+				shake($("#" + id), "shake2", 6);
+			}, 2, true);
+		}, content, false, true, "loading2");
+
+		e.preventDefault();
+	});
+});
+</script>
+
+{include footer.html}

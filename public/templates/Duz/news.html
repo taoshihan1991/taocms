@@ -1,0 +1,68 @@
+{include header.html}
+
+<div class="zbmain">
+
+    {include left.html}
+
+    <div class="zbright">
+
+        <div id="right_main">
+
+            <!--产品-->
+            <div class="right_dh">
+                <div class="right_dh_l"></div>
+                <div class="right_dh_txt">{$pagenav}</div>
+                <div class="right_dh_r"></div>
+                <div class="clear"></div>
+            </div>
+            <div class="right_ny ">
+                <table border="0" cellpadding="0" cellspacing="0" class="syprony">
+                    <tr>
+                    </tr>
+                        {foreach $articles as $n}
+                        <tr align="left">
+                            <td height="25">&nbsp;<img src="{$public}static/picture/icon.gif" alt=""> 
+                             <a href="{PURL('articles?id='.$n.a_id)}">{$n.title}</a> <span class="grey">&nbsp;<?php echo date("Y-m-d",$this->_tpl_vars['n']['created']);?></span></td>
+                            </tr>
+                        {/foreach}
+                </table>
+                <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td>
+                            <div id="page">
+                                <style>
+                                    #pagelist li{
+                                        list-style: none;
+                                        float: left;
+                                    }
+                                    #pagelist li span{
+                                        border: #CCCCCC 1px solid;
+                                        padding: 2px 5px;
+                                        margin: 2px;
+                                        color: #666666;
+                                        display: block;
+                                    }
+                                    #pagelist li a{
+                                        border: #01B0ED 1px solid;
+                                        padding: 2px 5px;
+                                        margin: 2px;
+                                        color: #01B0ED;
+                                        text-decoration: none;
+                                        display: block;
+                                    }
+                                </style>
+                                {$pagelist}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!--//产品-->
+
+    </div>
+</div>
+</div>
+
+</div>
+{include footer.html}

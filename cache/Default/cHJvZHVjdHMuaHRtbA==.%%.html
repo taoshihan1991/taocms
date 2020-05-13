@@ -1,0 +1,32 @@
+<?php $this->display('header.html'); ?>
+
+<!-- 产品列表页 start -->
+<div class="w prolist_main">
+	<!-- 产品列表 start -->
+	<div class="list">
+		<?php foreach($this->_tpl_vars['products'] AS $this->_tpl_vars['product']){; ?>
+		<div class="pro">
+			<div class="i_thumb_2"><table><tr><td><a href="<?php PURL('products?id=' . $this->_tpl_vars['product']['pro_id']); ?>" title="<?php echo $this->_tpl_vars['product']['title']; ?>"><img original="<?php PrintImageURL($this->_tpl_vars['product']['path'], $this->_tpl_vars['product']['filename'], 2); ?>"></a></td></tr></table></div>
+			<div class="t"><a href="<?php PURL('products?id=' . $this->_tpl_vars['product']['pro_id']); ?>" title="<?php echo $this->_tpl_vars['product']['title']; ?>"><?php echo $this->_tpl_vars['product']['title']; ?></a></div>
+		</div>
+		<?php }; ?>
+	</div>
+	<!-- 产品列表 end -->
+
+	<!-- 分页 start -->
+	<?php echo $this->_tpl_vars['pagelist']; ?>
+	<!-- 分页 end -->
+</div>
+<!-- 产品列表页 end -->
+
+<script>
+$(function() {
+	$(".i_thumb_2").hover(function(){
+		$(this).parent().addClass("hover2");
+	},function(){
+		$(this).parent().removeClass("hover2");
+	});
+});
+</script>
+
+<?php $this->display('footer.html'); ?>

@@ -1,0 +1,50 @@
+<div class="l fl">
+	<div class="h ac">
+		<a href="{PURL('uc')}"><img src="{PrintAvatar($sys_user.userid, 1)}" class="user_avatar1"></a>
+		<div class="n"><font class=gr2>{$sys_user.nickname}</font> | <a href="" class="u_logout"><font class=red>{$langs.logout}</font></a></div>			
+	</div>
+	<ul class="m">
+		<li class="first m1"><a href="{PURL('uc_edit')}">{$langs.u_edit}</a></li>
+		<li class="m2"><a href="{PURL('uc_avatar')}">{$langs.u_uploadav}</a></li>
+		<li class="m3"><a href="{PURL('uc_pm')}" title="{$sys_user.pms} {$langs.u_pms}">{$langs.u_mypm} <span class="u_pms{if $sys_user.pms} new{/if}" >{$sys_user.pms}</span></a></li>
+		<li class="m4"><a href="{PURL('uc_enquiry')}">{$langs.u_myeq}{if $sys_user.q_num} ({$sys_user.q_num}){/if}</a></li>
+		<li class="m5"><a href="{PURL('uc_article')}">{$langs.u_myart}{if $sys_user.a_num} ({$sys_user.a_num}){/if}</a></li>
+		<li class="m6"><a href="{PURL('uc_acomment')}">{$langs.u_acomms}{if $sys_user.ac_num} ({$sys_user.ac_num}){/if}</a></li>
+		<li class="m7"><a href="{PURL('uc_product')}">{$langs.u_mypro}{if $sys_user.p_num} ({$sys_user.p_num}){/if}</a></li>
+		<li class="last m8"><a href="{PURL('uc_pcomment')}">{$langs.u_pcomms}{if $sys_user.pc_num} ({$sys_user.pc_num}){/if}</a></li>
+	</ul>
+</div>
+<script type="text/javascript">
+$(function() {
+	//左侧用户菜单自动选中
+	var href, u_menus, u_menu_found = false;
+	u_menus = $(".uc .l .m > li > a");
+	u_menus.each(function(){
+		href = $(this).attr('href');
+		if(this_uri == href || this_uri == (href + '/') || href == (this_uri + '/')){
+			$(this).parent().addClass("on");
+			u_menu_found = true;
+			return false;
+		}
+	});
+	if(!u_menu_found){
+		u_menus.each(function(i){
+			if(this_uri.indexOf($(this).attr('href')) >= 0){
+				$(this).parent().addClass("on");
+				return false;
+			}
+		});
+	}
+
+	$("div.l ul.m li").hover(function(){
+		$(this).addClass("now");
+	},function(){
+		$(this).removeClass("now");
+	});
+
+	//小图显示中号缩略图特效
+	$("img.ZoomImg").mousemove(function(e) {
+		ShowBigImage(e, $(this));
+	});
+});
+</script>

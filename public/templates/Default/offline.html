@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>{$title}</title>
+<meta name="description" content="{$description}">
+<meta name="Keywords" content="{$keywords}">
+<style type="text/css">
+body{
+	font: 12px "Microsoft Yahei","\5b8b\4f53", Arial,Verdana;color: #333;background: #fff;
+}
+
+.info {
+	width:400px; margin:0 auto;
+	padding:18px;
+	border-radius: 4px 4px 4px 4px;
+	border:1px solid #8b8b8b;
+	background:#e1e1e1;
+}
+B {
+	border-bottom:1px dashed red;color:red;
+}
+</style>
+</head>
+<body>
+
+<!-- 网站关闭 start -->
+<div style="padding-top:180px;">
+	<!-- 输出错误信息 start -->
+	<div class="info">
+		<B>{$errtitle}:</B><BR><BR>{$errorinfo}
+	</div>
+	<!-- 输出错误信息 end -->
+</div>
+<!-- 网站关闭 end -->
+
+</body>
+</html>

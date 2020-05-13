@@ -1,0 +1,47 @@
+{include header.html}
+
+<div class="w uc">
+	<!-- 包含用户菜单 -->
+	{include uc_menu.html}
+
+	<div class="r fr">
+		<div class="t">{$submenu}</div>
+		<div class="con">
+			<div class="tbtitle grey">{$tbtitle}</div>
+			<form id="enqform" method="post" action="{PURL('uc_enquiry/delete')}">
+			<input type="hidden" name="p" value="{$page}">
+			<table class="tb2">
+			<tr>
+				<th>{$langs.subject} ({$langs.u_enqmore})</th>
+				<th>{$langs.status}</th>
+				<th>{$langs.email}</th>
+				<th>{$langs.u_sendtime}</th>
+				<th>{$langs.product}</th>
+				<th><input type="checkbox" id="checkAll" chkfor="deleteids[]" class="chbox"{if !$del_e} disabled{/if}> <label for="checkAll">{$langs.delete}</label></th>
+			</tr>
+			{$data}
+			</table>
+			{$pagelist}
+			<div class="submit ac"><input type="submit" value="{$langs.u_deleqs}" class="{if $del_e}save{else}cancel{/if}" id="u_deletes"{if !$del_e} disabled{/if}></div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+$(function(){
+	//全选checkbox
+	$("#checkAll").click(function(e){
+		$("input[name='" + $(this).attr("chkfor") + "']").attr("checked", this.checked);
+	});
+
+	$("input#u_deletes").click(function(e){
+		showDialog("{$langs.u_deleqsinfo}", '', function(){
+			$("form#enqform").submit();		
+		});
+		e.preventDefault();
+	});
+});
+</script>
+
+{include footer.html}

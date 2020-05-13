@@ -1,0 +1,82 @@
+<!-- 显示信息系统对话框 start -->
+{$system_info}
+<!-- 显示信息系统对话框 end -->
+<div class="w footer">
+	<div id="foot">
+	    <div>
+		<p id="footeradv">{$langs.footer_ad}</p>
+		<p id="message">
+			<a href="{PURL()}">{$langs.home}</a><em>|</em>
+			<a href="{PURL('news')}">{$langs.news}</a><em>|</em>
+			<a href="{PURL('products')}">{$langs.products}</a><em>|</em>
+			<a href="{PURL('about')}">{$langs.aboutus}</a><em>|</em>
+			<a href="{PURL('about?id=2')}">{$langs.contactus}</a>
+			{if $sitebeian}
+				<em>|</em>
+				<a href="http://www.miibeian.gov.cn/" target="_blank">{$sitebeian}</a>
+			{/if}
+		</p>
+		<p id="copy">&copy; {echo date("Y")} <a href="{PURL()}">{$sitename}</a> {Debug()}</p>
+	    </div>
+	</div>
+</div>
+
+
+<!-- 用户登录框(供JS调用, 未登录时有效) start -->
+{if !$sys_user.userid}
+<div id="login_container" class="hide">
+	<div id="u_login">
+		<div id="login_info"></div>
+		<div class="userform">
+			<form id="u_login_form" onsubmit="return false;">
+				<input type="hidden" name="key" value="{$sys_key}">
+				<input type="hidden" name="code" value="{$sys_code}">
+				<div class="item top">
+					<b class="i-u"></b><input name="username" placeholder="{$langs.username}" type="text" autocomplete="off">
+					<b class="i"></b>
+				</div>
+				<div class="item">
+					<b class="i-p"></b><input name="password" placeholder="{$langs.password}" type="password">
+					<b class="i"></b>
+				</div>
+				<div class="item rem">
+					<input type="checkbox" name="remember" value="1" id="remember"><label for="remember">{$langs.rememberme}</label>
+					<a href="#" id="forget_pass">{$langs.forgetpass}</a>
+				</div>
+			</form>
+
+			<form id="u_forgot_form" class="hide" onsubmit="return false;">
+				<input type="hidden" name="key" value="{$sys_key}">
+				<input type="hidden" name="code" value="{$sys_code}">
+				<div class="item">
+					<b class="i-u"></b><input name="email" placeholder="{$langs.email}" type="text" autocomplete="off">
+					<b class="i"></b>
+				</div>
+				<div class="item rem">
+					<a href="#" id="back_login">{$langs.backlogin}</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script>
+//输出一个登录函数供JS调用
+function login(){
+	openLogin("{PURL('ajax/login')}", "{PURL('ajax/getpass')}", "{echo COOKIE_SAFE}", "{$sys_cookievalue}");
+}
+</script>
+{/if}
+<!-- 用户登录框 end -->
+
+<script>
+$(function() {
+	//登录用户发短信
+	$(".pm").click(function(e) {
+		openPM("{PURL('uc_ajax/savepm')}",parseInt($(this).attr("toid")), $(this).attr("toname"), "{$sys_key}", "{echo COOKIE_SAFE}", "{$sys_cookievalue}");
+		e.preventDefault();
+	});
+});
+</script>
+
+</body>
+</html>

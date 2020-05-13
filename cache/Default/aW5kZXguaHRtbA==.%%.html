@@ -1,0 +1,85 @@
+<?php $this->display('header.html'); ?>
+
+<!-- 首页顶部 start -->
+<div class="w index_top">
+	<!-- 顶部左侧slide图片广告 start -->
+	<div class="slide_box loading2">
+		<ul>
+			<li><a href="http://www.weensoft.cn/bbs/" target="_blank"><img pic="<?php echo $this->_tpl_vars['t_url']; ?>images/adv_1.jpg"></a></li>
+			<li><a href="<?php PURL('products'); ?>"><img pic="<?php echo $this->_tpl_vars['t_url']; ?>images/adv_2.jpg"></a></li>
+			<li><a href="<?php PURL('about'); ?>"><img pic="<?php echo $this->_tpl_vars['t_url']; ?>images/adv_3.jpg"></a></li>
+		</ul>
+	</div>
+	<script type='text/javascript'>
+	$(function(){
+		$(".slide_box").slide();
+	});
+	</script>
+	<!-- 顶部左侧slide图片广告 end -->
+
+	<!-- 顶部右侧新闻公告 start -->
+	<div id="index_news">
+		<div class="divtop"><span class="span_r"><a href="<?php PURL('news'); ?>"><?php echo $this->_tpl_vars['langs']['more']; ?></a></span><span class=icon></span><a href="<?php PURL('news'); ?>"><?php echo $this->_tpl_vars['langs']['latestnews']; ?></a></div>
+		<div class="news">
+			<ul>
+			<?php foreach($this->_tpl_vars['news'] AS $this->_tpl_vars['new']){; ?>
+				<li><a href="<?php if($this->_tpl_vars['new']['linkurl']){; ?><?php echo $this->_tpl_vars['new']['linkurl']; ?>" target="_blank"<?php }else{; ?><?php PURL('news?id=' . $this->_tpl_vars['new']['n_id']); ?>"<?php }; ?>><?php echo $this->_tpl_vars['new']['title']; ?></a> <span class=grey>(<?php echo DisplayDate($this->_tpl_vars['new']['created']); ?>)</span></li>
+			<?php }; ?>
+			</ul>
+		</div>
+	</div>
+	<!-- 顶部右侧新闻公告 end -->
+</div>
+<!-- 首页顶部 end -->
+
+<!-- 首页中部 start -->
+<div class="w index_main">
+	<!-- 中部左侧企业介绍 start -->
+
+	<!-- 获取首页加载的常态内容, 并分配给变量 -->
+	<?php $this->_tpl_vars['homecontent'] = GetContent(3); ?>
+	<div class="m_left content"><?php echo $this->_tpl_vars['homecontent']['content']; ?></div>
+	<!-- 中部左侧企业介绍 end -->
+
+	<!-- 中部右侧最新产品 start -->
+	<div id="new_pros">
+		<div class="divtop"><span class="span_r"><a href="<?php PURL('products'); ?>"><?php echo $this->_tpl_vars['langs']['more']; ?></a></span><span class=icon></span><a href="<?php PURL('products'); ?>"><?php echo $this->_tpl_vars['langs']['latestpros']; ?></a></div>
+		<div class="pros">
+		<?php foreach($this->_tpl_vars['newproducts'] AS $this->_tpl_vars['product']){; ?>
+		<div class="pro">
+			<div class="i_thumb_1"><table><tr><td><a href="<?php PURL('products?id=' . $this->_tpl_vars['product']['pro_id']); ?>" title="<?php echo $this->_tpl_vars['product']['title']; ?>"><img original="<?php PrintImageURL($this->_tpl_vars['product']['path'], $this->_tpl_vars['product']['filename']); ?>"></a></td></tr></table></div>
+		</div>
+		<?php }; ?>
+		</div>
+	</div>
+	<!-- 中部右侧最新产品 end -->
+</div>
+<!-- 首页中部 end -->
+
+<!-- 底部推荐产品 start -->
+<div class="w index_bottom">
+	<div class="bottom">
+		<div class="title"><span class="span_r"><a href="<?php PURL('products?re'); ?>"><?php echo $this->_tpl_vars['langs']['more']; ?></a></span><span class=icon></span><a href="<?php PURL('products?re'); ?>"><?php echo $this->_tpl_vars['langs']['reproducts']; ?></a></div>
+		<div class="repros">
+		<?php foreach($this->_tpl_vars['recommends'] AS $this->_tpl_vars['product']){; ?>
+		<div class="pro">
+			<div class="i_thumb_2"><table><tr><td><a href="<?php PURL('products?id=' . $this->_tpl_vars['product']['pro_id']); ?>" title="<?php echo $this->_tpl_vars['product']['title']; ?>"><img original="<?php PrintImageURL($this->_tpl_vars['product']['path'], $this->_tpl_vars['product']['filename'], 2); ?>"></a></td></tr></table></div>
+			<div class="t"><a href="<?php PURL('products?id=' . $this->_tpl_vars['product']['pro_id']); ?>" title="<?php echo $this->_tpl_vars['product']['title']; ?>"><?php echo $this->_tpl_vars['product']['title']; ?></a></div>
+		</div>
+		<?php }; ?>
+		</div>
+	</div>
+</div>
+<!-- 底部推荐产品 end -->
+
+<script>
+$(function() {
+	$(".i_thumb_2").hover(function(){
+		$(this).parent().addClass("hover2");
+	},function(){
+		$(this).parent().removeClass("hover2");
+	});
+});
+</script>
+
+<?php $this->display('footer.html'); ?>

@@ -1,0 +1,211 @@
+<?php $this->display('header.html'); ?>
+
+<!-- 用户注册页 start -->
+<div id="news" class="w">
+	<!-- 注册内容 start -->
+	<div class="xleft">
+		<div class="t"><?php echo $this->_tpl_vars['langs']['regmember']; ?></div>
+		<div class="userform">
+			<form method="post" action="<?php PURL('register'); ?>" id="register_form">
+			<input type="hidden" name="key" value="<?php echo $this->_tpl_vars['sys_key']; ?>">
+			<input type="hidden" name="code" value="<?php echo $this->_tpl_vars['sys_code']; ?>">
+			<input type="hidden" name="backurl" value="<?php echo $this->_tpl_vars['backurl']; ?>">
+			<div class="item">
+				<p><b class="i-u"></b><input name="username" placeholder="<?php echo $this->_tpl_vars['langs']['username']; ?>" type="text" autocomplete="off" class="v"></p>
+				<b class="i"></b>
+				<span><?php echo $this->_tpl_vars['langs']['enter_un']; ?> (2 - 20<?php echo $this->_tpl_vars['langs']['characters']; ?>)</span>
+			</div>
+			<div class="item">
+				<p><b class="i-p"></b><input name="password" placeholder="<?php echo $this->_tpl_vars['langs']['password']; ?>" type="password" class="v"></p>
+				<b class="i"></b>
+				<span><?php echo $this->_tpl_vars['langs']['enter_ps']; ?> (4 - 20<?php echo $this->_tpl_vars['langs']['characters']; ?>)</span>
+			</div>
+			<div class="item">
+				<p><b class="i-p"></b><input name="repassword" placeholder="<?php echo $this->_tpl_vars['langs']['repassword']; ?>" type="password" class="v"></p>
+				<b class="i"></b>
+				<span><?php echo $this->_tpl_vars['langs']['enter_pa']; ?> (4 - 20<?php echo $this->_tpl_vars['langs']['characters']; ?>)</span>
+			</div>
+			<div class="item">
+				<p><b class="i-e"></b><input name="email" placeholder="<?php echo $this->_tpl_vars['langs']['email']; ?>" type="text" autocomplete="off" class="v"></p>
+				<b class="i"></b>
+				<span><?php echo $this->_tpl_vars['langs']['enter_em']; ?></span>
+			</div>
+			<div class="">
+				<img src="<?php PURL('vvc'); ?>?key=<?php echo $this->_tpl_vars['vvckey']; ?>" onclick="ChangeCaptcha(this);" style="cursor:pointer;" title="<?php echo $this->_tpl_vars['langs']['newcaptcha']; ?>" width="248" height="50">
+				<input type="hidden" name="vvckey" value="<?php echo $this->_tpl_vars['vvckey']; ?>">
+			</div>
+			<div class="item">
+				<p style="width:248px;float:left;">
+					<input name="vvc" placeholder="<?php echo $this->_tpl_vars['langs']['captcha']; ?>" type="text" autocomplete="off" class="vvc v">
+				</p>
+				<b class="i"></b>
+				<span><?php echo $this->_tpl_vars['langs']['enter_ca']; ?></span>
+			</div>
+			<div class="item">
+				<p style="width:248px;float:left;">
+					<input type="checkbox" name="agreeterms" value="1" checked="checked" id="agreeterms"><label for="agreeterms" class="grey"><?php echo $this->_tpl_vars['langs']['agreeterms']; ?>:</label> <a href="" onclick="window.open('<?php PURL('terms'); ?>', 'TermsOfService', 'toolbar=no,status=yes,location=no,menubar=no,resizable=yes,height=600,width=400,scrollbars=yes');return false;">《<?php echo $this->_tpl_vars['langs']['terms']; ?>》</a>
+				</p>
+				<b class="i"></b>
+				<span><?php echo $this->_tpl_vars['langs']['enter_te']; ?></span>
+			</div>
+
+			<div class="btn">
+				<input id="submit-btn" value="<?php echo $this->_tpl_vars['langs']['regmember']; ?>" type="submit" name="submit" class="cancel" disabled>
+			</div>
+			</form>
+		</div>
+	</div>
+	<!-- 注册内容 end -->
+
+	<!-- 最新产品 start -->
+	<div class="xright">
+		<div class="divtop"><span class="span_r"><a href="<?php PURL('products'); ?>"><?php echo $this->_tpl_vars['langs']['more']; ?></a></span><span class=icon></span><a href="<?php PURL('products'); ?>"><?php echo $this->_tpl_vars['langs']['latestpros']; ?></a></div>
+		<div class="pros">
+		<?php foreach($this->_tpl_vars['products'] AS $this->_tpl_vars['product']){; ?>
+		<div class="pro">
+			<div class="i_thumb_1"><table><tr><td><a href="<?php PURL('products?id=' . $this->_tpl_vars['product']['pro_id']); ?>" title="<?php echo $this->_tpl_vars['product']['title']; ?>"><img original="<?php PrintImageURL($this->_tpl_vars['product']['path'], $this->_tpl_vars['product']['filename']); ?>"></a></td></tr></table></div>
+		</div>
+		<?php }; ?>
+		</div>
+	</div>
+	<!-- 最新产品 end -->
+</div>
+<!-- 用户注册页 end -->
+
+<!-- 表单验证JS start -->
+<script>
+$(function(){
+	var total_oks = 1; //记录全部有效的表单, 默认为1个有效(同意条款默中为选中状态)
+	var repassword_info = "";
+	var username_info = "";
+	var email_info = "";
+	var vvc_info = "";
+
+	//设置input状态为ok
+	function change_ok(obj){
+		if(!obj) return;
+		total_oks +=1; //全部有效的表单加1
+		obj.addClass("ok");
+		obj.next().hide();
+
+		check_submit(); //检测提交按钮的状态
+	}
+
+	//检测提交按钮的状态
+	function check_submit(){
+		if(total_oks == 6){ //如果全部表单OK 
+			$("#submit-btn").removeAttr("disabled").removeClass("cancel").addClass("save");
+		}else{
+			$("#submit-btn").attr("disabled", true).removeClass("save").addClass("cancel");
+		}
+	}
+
+	$("#register_form input.v").focus(function(){ //获得焦点时
+		var _me = $(this);
+		var name = _me.attr("name");
+		var b = _me.parent().next();
+
+		if(b.hasClass("ok")){
+			total_oks -=1; //重新获得焦点时, 如果状态为OK全部有效的表单减1
+			check_submit();
+		}
+
+		if(repassword_info && name == "repassword") {
+			b.next().html(repassword_info);
+			repassword_info = "";
+		}else if(username_info && name == "username"){
+			b.next().html(username_info);
+			username_info = "";
+		}else if(email_info && name == "email"){
+			b.next().html(email_info);
+			email_info = "";
+		}else if(vvc_info && name == "vvc"){
+			b.next().html(vvc_info);
+			vvc_info = "";
+		}
+
+		b.removeClass("wrong ok").next().removeClass("red").addClass("black").show();
+
+	}).blur(function(){ //失去焦点时
+		var _me = $(this);
+		var name = _me.attr("name");
+		var value = _me.val();
+		var b = _me.parent().next();
+		var span = b.next();
+
+		if(validate_input(value, name)){
+			if(name == "repassword"){
+				if(value != $("#register_form input[name=password]").val()){
+					repassword_info = span.html();
+					span.html(langs.er_pnotsame);
+					b.addClass("wrong");
+					span.addClass("red");
+				}else{
+					change_ok(b);
+				}
+			}else if(name == "username"){  //如果是用户名, ajax检测是否已经注册
+				ajax("<?php PURL('ajax/register?action=checkusername'); ?>", { username: value}, function(data){
+					if(data.s == 0){
+						username_info = span.html();
+						span.html(data.i);
+						b.addClass("wrong");
+						span.addClass("red");
+					}else{
+						change_ok(b);
+					}
+				}, b);
+
+			}else if(name == "email"){  //如果是email, ajax检测是否已经占用
+				ajax("<?php PURL('ajax/register?action=checkemail'); ?>", { email: value}, function(data){
+					if(data.s == 0){
+						email_info = span.html();
+						span.html(data.i);
+						b.addClass("wrong");
+						span.addClass("red");
+					}else{
+						change_ok(b);
+					}
+				}, b);
+
+			}else if(name == "vvc"){  //如果是vvc, ajax检测是否正确
+				ajax("<?php PURL('ajax/register?action=checkvvc'); ?>", { vvc: value, vvckey: $("#register_form input[name=vvckey]").val()}, function(data){
+					if(data.s == 0){
+						vvc_info = span.html();
+						span.html(data.i);
+						b.addClass("wrong");
+						span.addClass("red");
+					}else{
+						change_ok(b);
+					}
+				}, b);
+
+			}else{
+				change_ok(b);
+			}
+		}else{
+			b.addClass("wrong");
+			span.addClass("red");
+		}
+	});
+
+	//服务条款复选框
+	$("#agreeterms").click(function(e){
+		if(this.checked){
+			change_ok($(this).parent().next());
+		}else{
+			total_oks -=1; //全部有效的表单减1
+			$(this).parent().next().removeClass("ok").addClass("wrong").next().addClass("red").show();
+			check_submit(); //检测提交按钮的状态
+		}
+	});
+
+	//提交时生成验证cookie, 防机器人注册得
+	$("#submit-btn").click(function(e){
+		setCookie("<?php echo COOKIE_SAFE; ?>", "<?php echo $this->_tpl_vars['sys_cookievalue']; ?>");
+		return true;
+	});
+});
+</script>
+<!-- 表单验证JS end -->
+
+<?php $this->display('footer.html'); ?>

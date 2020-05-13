@@ -1,0 +1,90 @@
+{include header.html}
+
+<div class="w uc">
+	<!-- 包含用户菜单 -->
+	{include uc_menu.html}
+
+	<div class="r fr">
+		<div class="t">{$submenu}</div>
+		<div class="con">
+			<form id="proform" method="post" action="{PURL('uc_product/delete')}">
+			<input type="hidden" name="p" value="{$page}">
+			<table class="tb2">
+			<tr>
+				<th>{$langs.product} ({$langs.edit})</th>
+				<th>{$langs.protitle}</th>
+				<th>{$langs.status}</th>
+				<th>{$langs.category}</th>
+				<th>{$langs.price}</th>
+				<th>{$langs.clicks}</th>
+				<th>{$langs.date}</th>
+				<th>{$langs.view}</th>
+				<th><input type="checkbox" id="checkAll" chkfor="deleteids[]" class="chbox"{if !$del_p} disabled{/if}> <label for="checkAll">{$langs.delete}</label></th>
+			</tr>
+			{$line2 = 0}
+			{foreach $products AS $pro}
+				{if $line2}
+					{$lineclass = ' class=tr2'; $line2 = 0}
+				{else}
+					{$lineclass = ''; $line2 = 1}
+				{/if}
+				<tr{$lineclass}>
+					<td><a href="{PURL('uc_product/edit')}?pro_id={$pro.pro_id}"><img class="ZoomImg" width="40" original="{PrintImageURL($pro.path, $pro.filename)}"></a></td>
+					<td class=al><div class=short1><a href="{PURL('uc_product/edit')}?pro_id={$pro.pro_id}" title="{$pro.title}">{if $pro.is_show == 0}<font class=red><s>{$pro.title}</s></font>{else}{$pro.title}{/if}</a></div></td>
+					<td>{if $pro.is_show == 1}{$langs.u_online}{elseif $pro.is_show == 0}<font class=red><s>{$langs.forbidden}</s></font>{else}<font class=red>{$langs.u_waiting}</font>{/if}</td>
+					<td><?php echo $this->pcategories[$this->_tpl_vars['pro']['cat_id']]['name']; ?></td>
+					<td>{$pro.price}</td>
+					<td>{$pro.clicks}</td>
+					<td>{echo DisplayDate($pro.created)}</td>
+					<td>{if $pro.is_show ==1}<a href="{PURL('products')}?id={$pro.pro_id}"" target="_blank" title="ID: {$pro.pro_id}"><img src="{$t_url}images/product.gif"></a>{else}&nbsp;{/if}</td>
+					<td><input type="checkbox" name="deleteids[]" value="{$pro.pro_id}" class="chbox"{if !$del_p} disabled{/if}></td>
+				</tr>
+			{/foreach}
+			</table>
+			{$pagelist}
+			{if $products}
+			<div class="submit ac"><input type="submit" value="{$langs.u_delpros}" class="{if $del_p}save{else}cancel{/if}" id="u_deletes"{if !$del_p} disabled{/if}></div>
+			{/if}
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+$(function(){
+	//全选checkbox
+	$("#checkAll").click(function(e){
+		$("input[name='" + $(this).attr("chkfor") + "']").attr("checked", this.checked);
+	});
+
+	$("input#u_deletes").click(function(e){
+		showDialog("{$langs.u_delepinfo}", '', function(){
+			$("form#proform").submit();		
+		});
+		e.preventDefault();
+	});
+
+	//验证添加权限
+	$(".uc a.link-btn").each(function(){
+		if($(this).attr("href").indexOf("/add") >= 0){
+			var morepros = "{$morepros}";
+			var err = false;
+			if(!{$add_p}){
+				err = langs.er_nopro_right;
+			}else if(morepros && parseInt(morepros) <= 0){
+				err = langs.er_pnum;
+			}
+
+			if(err){
+				$(this).click(function(e){
+					showInfo(err, '', '', 2);
+					e.preventDefault();
+				});
+			}
+			return false;
+		}
+	});
+});
+</script>
+
+{include footer.html}

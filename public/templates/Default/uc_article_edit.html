@@ -1,0 +1,110 @@
+{include header.html}
+
+<div class="w uc">
+	<!-- 包含用户菜单 -->
+	{include uc_menu.html}
+	{$KE_lang = Iif(IS_CHINESE, 'zh_CN', 'en')}
+
+	<div class="r fr">
+		<div class="t">{$submenu}</div>
+		<div class="con">
+		<script charset="utf-8" src="{$public}js/kindeditor/kindeditor.js"></script>
+		<script charset="utf-8" src="{$public}js/kindeditor/lang/{$KE_lang}.js"></script>
+		<script type="text/javascript">
+			KindEditor.ready(function(K) {
+				var editor88 = K.create('textarea[name="content"]', {
+					uploadJson : "{PURL('editor_upload')}",
+					fileManagerJson :  "{PURL('editor_file_manager')}",
+					allowFileManager : true,
+					langType: "{$KE_lang}",
+				});
+
+				var editor66 = K.create('textarea[name="content_en"]', {
+					uploadJson : "{PURL('editor_upload')}",
+					fileManagerJson :  "{PURL('editor_file_manager')}",
+					allowFileManager : true,
+					langType: "{$KE_lang}",
+				});
+			});
+		</script>
+		<form id="editorform88" name="editorform88" method="post" enctype="multipart/form-data" action="{PURL('uc_article/save')}">
+			<input type="hidden" name="a_id" value="{$a_id}">
+			<input type="hidden" name="is_show" value="{$article.is_show}">
+			<table class="tb1">
+			{if $a_id AND $del_a}
+			<tr>
+				<td><b>{$langs.u_delete}</b></td>
+				<td><input type="checkbox" name="deletethisarticle" value="1"> <b>{$langs.yes}:</b> <font class=redb>{$langs.u_becarefull}</font></td>
+			</tr>
+			{/if}
+			<tr>
+				<td><b>{$langs.u_belongto}:</b></td>
+				<td>
+					<input type="hidden" name="oldcat_id" value="{$article.cat_id}">
+					<select name="cat_id">
+					<option value="0">-- {$langs.u_choose} --</option>
+					{$cat_options}
+					</select>&nbsp; <font class=red>*</font>
+				</td>
+			</tr>
+			<tr>
+				<td><b>{$langs.title} (<span class=blue>{$langs.chinese}</span>):</b></td>
+				<td><input type="text" name="title" value="{$article.title}"  size="50">{if IS_CHINESE}&nbsp; <font class=red>*</font>{/if}</td>
+			</tr>
+			<tr>
+				<td><b>{$langs.title} (<span class=red>{$langs.english}</span>):</b></td>
+				<td><input type="text" name="title_en" value="{$article.title_en}"  size="50">{if !IS_CHINESE}&nbsp; <font class=red>*</font>{/if}</td>
+			</tr>
+			<tr>
+				<td><b>{$langs.u_keywords} (<span class=blue>{$langs.chinese}</span>):</b></td>
+				<td><input type="text" name="keywords" value="{$article.keywords}"  size="50"></td>
+			</tr>
+			<tr>
+				<td><b>{$langs.u_keywords} (<span class=red>{$langs.english}</span>):</b></b></td>
+				<td><input type="text" name="keywords_en" value="{$article.keywords_en}"  size="50"></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<div class="ok_tab">
+						<div class="ok_tabheader">
+							<ul id="tabContent-li-ok_tabOn-">
+								<li class="ok_tabOn"><a href="javascript:void(0)" rel="1" hidefocus="true">{$langs.u_content} (<font class=blue>{$langs.chinese}</font>)</a></li>
+								<li><a href="javascript:void(0)" rel="2" hidefocus="true">{$langs.u_content} (<font class=red>{$langs.english}</font>)</a></li>
+							</ul>
+						</div>
+						<div id="tabContent_1" class="tabContent">
+						 <textarea name="content" style="width:100%;height:400px;visibility:hidden;" id="content">{$article.content}</textarea>
+						</div>
+
+						<div id="tabContent_2" class="tabContent" style="display: none;">
+						<textarea name="content_en" style="width:100%;height:400px;visibility:hidden;" id="content_en">{$article.content_en}</textarea>
+						</div>
+
+						<div class="ok_tabbottom">
+							<span class="tabbottomL"></span>
+							<span class="tabbottomR"></span>
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td><b>{$langs.u_link} (<span class=blue>{$langs.chinese}</span>):</b></td>
+				<td><input type="text" name="linkurl" value="{$article.linkurl}" size="50"><i>{$langs.u_linkinfo}</i></td>
+			</tr>
+			<tr>
+				<td><b>{$langs.u_link} (<span class=red>{$langs.english}</span>):</b></b></td>
+				<td><input type="text" name="linkurl_en" value="{$article.linkurl_en}" size="50"></td>
+			</tr>
+			</table>
+			<div class="submit ac"><input type="submit" value="{$langs.save}" class="save"></div>
+		</form>
+		</div>
+	</div>
+</div>
+<script>
+$(function(){
+	new tab('tabContent-li-ok_tabOn-', '-');
+});
+</script>
+
+{include footer.html}

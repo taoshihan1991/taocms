@@ -1,0 +1,44 @@
+{include header.html}
+
+<!-- 新闻列表页 start -->
+<div id="news" class="w">
+	<!-- 新闻内容 start -->
+	<div class="xleft">
+		<div class="t"><b class=grey>{$langs.title}:</b>{$news.title}</div>
+		<div class="s">
+			{$langs.date}: {echo DisplayDate($news.created)}<u></u>{$langs.clicks}: {$news.clicks}
+			<div class="fontZoom">
+				<a href="" class="icons font_down" title="{$langs.zoomout}"></a>
+				<a href="" class="icons font_up" title="{$langs.zoomin}"></a>
+			</div>
+		</div>
+		<div class="content">{echo html($news.content)}</div>
+		<div class="page">
+			<div class="prev">{if $prev_news.n_id}<span>{$langs.prevnews}:</span><a href="{PURL('news?id=' . $prev_news.n_id)}" {if $prev_news.linkurl} target="_blank"{/if} title="{$prev_news.title}">{$prev_news.title}</a>{/if}</div>
+			<div class="next">{if $next_news.n_id}<span>{$langs.nextnews}:</span><a href="{PURL('news?id=' . $next_news.n_id)}" {if $next_news.linkurl} target="_blank"{/if} title="{$next_news.title}">{$next_news.title}</a>{/if}</div>
+		</div>
+	</div>
+	<!-- 新闻内容 end -->
+
+	<!-- 产品展示 start -->
+	<div class="xright">
+		<div class="divtop"><span class="span_r"><a href="{PURL('products')}">{$langs.more}</a></span><span class=icon></span><a href="{PURL('products')}">{$langs.randproduct}</a></div>
+		<div class="pros">
+		{foreach $products AS $product}
+		<div class="pro">
+			<div class="i_thumb_1"><table><tr><td><a href="{PURL('products?id=' . $product.pro_id)}" title="{$product.title}"><img original="{PrintImageURL($product.path, $product.filename)}"></a></td></tr></table></div>
+		</div>
+		{/foreach}
+		</div>
+	</div>
+	<!-- 产品展示 end -->
+</div>
+<!-- 新闻列表页 end -->
+
+<script type="text/javascript">
+$(function() {
+	$(".fontZoom").fontZoom({ obj:".content", max:36, min:10});
+});
+</script>
+
+{include footer.html}

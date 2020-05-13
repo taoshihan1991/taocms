@@ -1,0 +1,60 @@
+#featuredmain {
+	TEXT-ALIGN: center; MARGIN: 0px auto; WIDTH: 280px
+}
+.IMG1 {
+	BORDER-BOTTOM-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none
+}
+#featured {
+	WIDTH: 280px; HEIGHT: 280px; OVERFLOW: hidden; border:1px solid #ccc;vertical-align:middle;background-color:#ffffff;
+}
+
+#featured tr{list-style:none;vertical-align:middle;}
+#featured td{width:280px;height:280px;vertical-align:middle;}
+
+
+#featured .ui-els-hide {
+	DISPLAY: none
+}
+
+#thumbs {
+	LIST-STYLE-TYPE: none; WIDTH: 300px; FLOAT: left; HEIGHT: 74px
+}
+* HTML #thumbs {
+	HEIGHT: 100%
+}
+#thumbs LI {
+	WIDTH: 54px; FLOAT: left; HEIGHT: 54px; MARGIN-RIGHT: 13px; _margin-right: 13px
+}
+#thumbs UL {
+	LIST-STYLE-TYPE: none; MARGIN-TOP: 3px; PADDING-LEFT: 0px; MARGIN-LEFT: 0px; _padding-left: 1px
+}
+#thumbs LI.last_img {
+	MARGIN-RIGHT: 4px
+}
+#thumbs LI.first {
+	MARGIN: 5px 10px 0pt 15px; WIDTH: 20px; HEIGHT: 13px; CURSOR: pointer
+}
+#thumbs LI.last {
+	MARGIN: 5px 12px 0pt 8px; WIDTH: 20px; HEIGHT: 13px; CURSOR: pointer
+}
+#thumbs LI A {
+	BORDER-BOTTOM: #9c9c9c 2px solid; BORDER-LEFT: #9c9c9c 2px solid; WIDTH: 56px; DISPLAY: block; FONT-SIZE: 0px; BORDER-TOP: #9c9c9c 2px solid; BORDER-RIGHT: #9c9c9c 2px solid
+}
+#thumbs LI A:hover {
+	BORDER-BOTTOM: #99cc33 2px solid; BORDER-LEFT: #99cc33 2px solid; BORDER-TOP: #99cc33 2px solid; BORDER-RIGHT: #99cc33 2px solid
+}
+#thumbs LI A.current {
+	BORDER-BOTTOM: #99cc33 2px solid; BORDER-LEFT: #99cc33 2px solid; BORDER-TOP: #99cc33 2px solid; BORDER-RIGHT: #99cc33 2px solid; opacity: 1
+}
+#thumbs LI.first IMG {
+	BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px
+}
+#thumbs LI.last IMG {
+	BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px
+}
+.skin_kinds_nav {
+	HEIGHT: 34px
+}
+.slideshowItem {
+	POSITION: relative
+}
