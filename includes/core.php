@@ -33,7 +33,7 @@ define('BACKURL', $_SERVER['HTTP_REFERER']); //前一个页面的URL
 
 define('SITEREWRITE', $_CFG['siteRewrite']);  //定义是否开启了伪静态常量, 用于URL(), PURL(), BURL()函数及发送邮件等
 define('RW_FRONTEND', SYSDIR . (SITEREWRITE? '' : 'index.php/')); //前台切换伪静态时相对于服务器根目录的URL, 用于URL(), PURL()函数, 提高运行速度
-
+define('RW_BACKEND', SYSDIR . ADMINDIR . '/' . (SITEREWRITE? '' : 'index.php/')); //后台切换伪静态时相对系统根目录的URL, 用于BURL()函数, 提高运行速度
 define('T_PATH', ROOT . 'public/templates/' . $_CFG['siteDefaultTemplate'].'/'); //前台当前模板绝对路径
 define('T_URL', SYSDIR . 'public/templates/' . $_CFG['siteDefaultTemplate'].'/'); //前台当前模板相对URL
 
