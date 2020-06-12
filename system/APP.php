@@ -193,7 +193,7 @@ class APP{
 	 */
 	private static $_debug = 1;
 
-	private function debug($debugmsg, $controller){
+	private static function debug($debugmsg, $controller){
 		if(self::$_debug || $controller == 'index'){
 			include('errors/404.php');
 		}else{

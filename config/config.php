@@ -1,9 +1,9 @@
 <?php if(!defined('ROOT')) die('Access denied.');
 
-$servername  = '1';
-$dbname      = '1';
-$dbusername  = '2';
-$dbpassword  = '2';
+$servername  = '127.0.0.1';
+$dbname      = 'taocms';
+$dbusername  = 'taocms';
+$dbpassword  = 'taocms';
 $dbmysql  = 'mysqli';
 
 define('TABLE_PREFIX', 'hong_');
