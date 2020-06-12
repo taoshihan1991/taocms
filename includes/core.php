@@ -45,6 +45,7 @@ define('COOKIE_USER', COOKIE_KEY.'user');  //前台用户的COOKIE名称
 define('COOKIE_ADMIN', COOKIE_KEY.'admin');  //后台用户的COOKIE名称
 
 //定义前台语言
+$lang = 'Chinese';
 if(isset($_COOKIE['hongcmslang168'])){
 	$lang = $_COOKIE['hongcmslang168'];
 }else{

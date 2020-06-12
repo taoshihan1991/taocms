@@ -2,7 +2,7 @@
 
 $_CFG = array();
 
-$_CFG['siteBaseUrl'] = "http://www.duzbearings.com/";
+$_CFG['siteBaseUrl'] = "http://local.duzbearings.com/";
 $_CFG['siteAllowRegister'] = "1";
 $_CFG['siteRegisterCheck'] = "EmailVerify";
 $_CFG['siteDefaultLang'] = "English";

@@ -1373,7 +1373,7 @@ $(function(){
 	$("#top .cn").click(function(){
 		setCookie('hongcmslang168', 'Chinese', 30);
 		var href=window.location.href.replace(/#[\w]*/ig, '');
-		href=href.replace(/\/en\//ig,'/');
+		href=href.replace(/\/en/ig,'');
 		document.location=href;
 	});
 	$("#top .en").click(function(){
