@@ -1372,7 +1372,9 @@ $(function(){
 	//切换语言动作
 	$("#top .cn").click(function(){
 		setCookie('hongcmslang168', 'Chinese', 30);
-		document.location=window.location.href.replace(/#[\w]*/ig, '');
+		var href=window.location.href.replace(/#[\w]*/ig, '');
+		href=href.replace(/\/en\//ig,'/');
+		document.location=href;
 	});
 	$("#top .en").click(function(){
 		setCookie('hongcmslang168', 'English', 30);

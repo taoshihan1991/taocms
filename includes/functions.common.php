@@ -4,7 +4,13 @@ include(ROOT . 'includes/functions.global.php');
 
 //前台模板中输出伪静态PURL
 function PURL($url = ''){
-	echo RW_FRONTEND . $url;
+
+    if(!IS_CHINESE){
+        $u=RW_FRONTEND . 'en/' .$url;
+    }else{
+        $u=RW_FRONTEND . $url;
+    }
+	echo $u;
 }
 
 //立即跳转函数 redirect
