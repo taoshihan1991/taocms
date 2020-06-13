@@ -6,7 +6,7 @@ $dbusername  = 'taocms';
 $dbpassword  = 'taocms';
 $dbmysql  = 'mysqli';
 
-define('TABLE_PREFIX', 'hong_');
+define('TABLE_PREFIX', 'tao_');
 define('COOKIE_KEY', 'F0N3suuvTyXg');
 define('WEBSITE_KEY', '0vT46695MQ8v');
 define('SYSDIR', '/');

@@ -75,9 +75,9 @@ if(isset($_COOKIE[COOKIE_KEY . 'safe'])){
 }
 //新目录进行设置英文版
 $path = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : @getenv('PATH_INFO');
-$enPrefix=strtolower(substr($path,0,3));
-if($enPrefix=="/en"){
-    $_SERVER['PATH_INFO']=substr($path,3);
+$enPrefix=strtolower(substr($path,0,4));
+if($enPrefix=="/en/"){
+    $_SERVER['PATH_INFO']=substr($path,4);
     $lang = 'English';
 }
 
