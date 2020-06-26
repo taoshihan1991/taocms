@@ -110,7 +110,7 @@ class c_articles extends SWeb{
 				$sub_categorysql = GetSubArtcats($cat); //获取所以下级分类的SQL
 			}
 
-			if($sub_categorysql){
+			if(isset($sub_categorysql)){
 				$special_sql = " AND cat_id IN (". $cat . $sub_categorysql. ") ";
 			}else{
 				$special_sql = " AND cat_id = $cat ";

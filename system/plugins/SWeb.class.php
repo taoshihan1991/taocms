@@ -119,7 +119,12 @@ class SWeb extends STpl{
 				$this->pcats_ok[] = $cat_id; //记录有效(未隐藏)的产品分类cat_id数组
 				$hasSub = in_array($cat_id, $this->pcat_ids); //当前分类是否存在下级分类
 
-				if($level < 4) $catname = $this->pcategories[$cat_id]['name'];
+				if($level < 4) {
+				    $catname="";
+				    if(isset($this->pcategories[$cat_id]['name'])){
+				    	$catname = $this->pcategories[$cat_id]['name'];
+				    }
+				}
 
 				switch($level){
 				case 1:

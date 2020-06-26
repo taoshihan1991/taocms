@@ -9,7 +9,7 @@ $sys_starttime = $mtime[1] + $mtime[0];
 
 //自动加载函数
 function autoloader($class){
-	if($class{0} === "S"){
+	if($class[0] === "S"){
 		$file = ROOT . "system/plugins/$class.class.php"; //自动加载系统扩展类
 	}else{
 		//自动加载模型, 模型类名: name, 文件名必须小写, 文件路径如: ./models/name.php
