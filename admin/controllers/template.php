@@ -202,6 +202,7 @@ class c_template extends SAdmin{
 		$uploaded = ForceStringFrom('uploaded');
 
 		$Templates = GetTemps();
+		$templateoptions='';
 		foreach($Templates as $val){
 			$templateoptions .='<option value="'.$val.'"' . Iif(APP::$_CFG['siteDefaultTemplate'] == $val, ' SELECTED') . '>'.$val.'</option>';
 		}

@@ -159,6 +159,7 @@ class c_language extends SAdmin{
 		SubMenu('语言管理', array(array('语言列表及操作', 'language', 1)));
 
 		$Langs = GetLangs();
+		$langoptions='';
 		foreach($Langs as $val){
 			$langoptions .='<option value="'.$val.'"' . Iif(APP::$_CFG['siteDefaultLang'] == $val, ' SELECTED') . '>'.$val.'</option>';
 		}
@@ -200,7 +201,7 @@ class c_language extends SAdmin{
 				$columncount = 0;
 			}
 		}
-		@closedir($handle);
+		//@closedir($handle);
 
 		if($columncount != 0 && $columncount != 3){
 			while($columncount < 3){

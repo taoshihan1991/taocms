@@ -215,7 +215,7 @@ function GetTemps() {
 			if (substr($Item, 0, 1) != ".") $Templates[] = $Item;
 		}
 	}
-	@closedir($LangPath);
+	@closedir($FolderHandle);
 	return $Templates;
 }
 
@@ -232,7 +232,7 @@ function GetLangs($filename = 0) {
 			}
 		}
 	}
-	@closedir($LangPath);
+	@closedir($FolderHandle);
 	return $Languages;
 }
 

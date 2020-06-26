@@ -175,9 +175,9 @@ function ForceCookieFrom($VariableName, $DefaultValue = '') {
 // ##
 function EscapeSql($query_string) {
 
-	if(get_magic_quotes_gpc()) {
+	//if(get_magic_quotes_gpc()) {
 		$query_string = stripslashes($query_string);
-	}
+	//}
 
 	//XSS过滤
 	$xss = new SXss;
